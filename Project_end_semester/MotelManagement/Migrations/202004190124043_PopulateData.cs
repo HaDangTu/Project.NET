@@ -18,8 +18,8 @@
 
             //Room TypeTable
             Sql("INSERT INTO [dbo].[RoomTypes] ([id] ,[name] ,[number_of_guest] ,[price]) VALUES ('T01' , N'Phòng 2 người' , 2 , 1200000)");
-            Sql("INSERT INTO [dbo].[RoomTypes] ([id] ,[name] ,[number_of_guest] ,[price]) VALUES ('T02' , N'Phòng 4 người' , 2 , 2400000)");
-            Sql("INSERT INTO [dbo].[RoomTypes] ([id] ,[name] ,[number_of_guest] ,[price]) VALUES ('T03' , N'Phòng 6 người' , 2 , 4800000)");
+            Sql("INSERT INTO [dbo].[RoomTypes] ([id] ,[name] ,[number_of_guest] ,[price]) VALUES ('T02' , N'Phòng 4 người' , 4 , 2400000)");
+            Sql("INSERT INTO [dbo].[RoomTypes] ([id] ,[name] ,[number_of_guest] ,[price]) VALUES ('T03' , N'Phòng 6 người' , 6 , 4800000)");
 
             //Room table
             Sql("INSERT INTO [dbo].[Rooms] ([id], [name], [room_type_id]) VALUES ('R0001' ,N'Phòng 101' , 'T01')");
