@@ -32,7 +32,7 @@ namespace MotelManagement.Models
         public double Price { get; set; }
 
 
-        public virtual IEnumerable<Room> Rooms { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
 
         
     }

@@ -209,12 +209,10 @@ E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\Microsoft.Owin.Se
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\Microsoft.Owin.Security.OAuth.xml
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csprojAssemblyReference.cache
-E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.Initial.resources
-E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.InitUserRole.resources
-E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.InitTables.resources
-E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateData.resources
-E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csproj.GenerateResource.cache
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csproj.CoreCompileInputs.cache
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csproj.CopyComplete
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.dll
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.pdb
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.InitialDB.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csproj.GenerateResource.cache
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateData.resources

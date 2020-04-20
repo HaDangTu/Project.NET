@@ -3,55 +3,33 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Motel management</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-md fixed-top bg-primary navbar-dark">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 @Html.ActionLink("ABC EMotel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse ">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Khách trọ", "Index", "Guest")</li>
-                    <li>@Html.ActionLink("Phòng", "Index", "Room")</li>
-                    <li>@Html.ActionLink("Loại phòng", "Index", "RoomType")</li>
-                    <li>@Html.ActionLink("Điện nước", "Index", "ElectricityAndWater")</li>
-                    <li class="dropdown">
-                        <a href="" class="navbar-link dropdown-toggle" data-toggle="dropdown">
-                            Thu Tiền
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Điện nước", "CollectElectricMoney", "CollectMoney")</li>
-                            <li>@Html.ActionLink("Phòng", "CollectRoomMoney", "CollectMoney")</li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="" class="navbar-link dropdown-toggle" data-toggle="dropdown">
-                            Báo cáo
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Báo cáo doanh thu", "ReportSale", "Report")</li>
-                            <li>@Html.ActionLink("Thống kê nợ", "DebtStatistic", "Report")</li>
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <ul class="nav navbar-nav font-weight-bold">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li>@Html.ActionLink("Khách trọ", "Index", "Guest", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li>@Html.ActionLink("Phòng", "Index", "Room", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li>@Html.ActionLink("Loại phòng", "Index", "RoomType", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
-    <div class="container body-content">
+    </nav>
+    <div class="container pt-5">
         @RenderBody()
         <hr />
         <footer>

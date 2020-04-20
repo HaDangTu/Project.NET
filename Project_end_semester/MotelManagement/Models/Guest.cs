@@ -53,6 +53,7 @@ namespace MotelManagement.Models
         [Display(Name = "Phòng")]
         [Required]
         public string RoomID { get; set; }
+        public virtual Room Room { get; set; }
 
         [Column("state_id")]
         [Display(Name = "Trạng thái")]
@@ -60,6 +61,6 @@ namespace MotelManagement.Models
         public string StateID { get; set; }
         public virtual State State { get; set; }
 
-        public virtual Room Room { get; set; }
+        
     }
 }

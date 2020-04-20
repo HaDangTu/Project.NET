@@ -29,10 +29,10 @@ namespace MotelManagement.Models
         public string UserID { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        public virtual IEnumerable<Invoice> Invoices { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
 
-        public virtual IEnumerable<ElectricityAndWaterInfo> Infos { get; set; }
+        public virtual ICollection<ElectricityAndWaterInfo> Infos { get; set; }
 
-        public virtual IEnumerable<Guest> Guests { get; set; }
+        public virtual ICollection<Guest> Guests { get; set; }
     }
 }

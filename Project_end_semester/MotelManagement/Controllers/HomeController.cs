@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Web.Mvc;
+using MotelManagement.DAL;
+using MotelManagement.Models;
 
 namespace MotelManagement.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private ApplicationDbContext _dbContext;
+
+        public HomeController()
         {
-            return View();
+            _dbContext = new ApplicationDbContext();
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            IEnumerable<Room> rooms = await _dbContext.Rooms.Include(r => r.Guests).ToListAsync();
+
+            return View(rooms );
         }
 
         public ActionResult About()

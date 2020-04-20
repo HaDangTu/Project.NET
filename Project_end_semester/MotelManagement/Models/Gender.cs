@@ -19,6 +19,6 @@ namespace MotelManagement.Models
         [Display(Name = "Tên giới tính")]
         public string Name { get; set; }
 
-        public virtual IEnumerable<Guest> Guests { get; set; }
+        public virtual ICollection<Guest> Guests { get; set; }
     }
 }
