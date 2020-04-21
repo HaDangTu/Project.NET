@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Collections;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ using Microsoft.Owin.Security;
 using MotelManagement.Models;
 using MotelManagement.DAL;
 using MotelManagement.ViewModels;
+using MotelManagement.Utility;
+using System.Collections.Generic;
+
 namespace MotelManagement.Controllers
 {
     [Authorize]
@@ -147,7 +151,8 @@ namespace MotelManagement.Controllers
             //Code change
             RegisterViewModel viewModel = new RegisterViewModel()
             {
-                Roles = _dbContext.Roles
+                Roles = _dbContext.Roles,
+                Rooms = _dbContext.Rooms.Where(r => r.UserID == null)
             };
             //-----------------------------
             return View(viewModel);
@@ -164,8 +169,17 @@ namespace MotelManagement.Controllers
             if (ModelState.IsValid)
             {
                 //Code change
+                string userId = string.Empty;
+                IEnumerable<ApplicationUser> users = _dbContext.Users.ToList();
+                var lastUser = users.LastOrDefault();
 
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+                if (lastUser == null) userId = "USR00001";
+                else userId = IdGenerator.generateNextID("USR", lastUser.Id, false);
+                
+                var user = new ApplicationUser {
+                    Id = userId,
+                    UserName = model.Username,
+                    Email = model.Email };
                 //--------------------------------------------------
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -180,6 +194,14 @@ namespace MotelManagement.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     await UserManager.AddToRoleAsync(user.Id, model.Role);
+                    if (model.Role == "Guest")
+                    {
+                        List<Room> rooms = _dbContext.Rooms.ToList();
+                        var room = rooms.Where(r => r.ID == model.RoomId).Single();
+                        room.UserID = userId;
+
+                        _dbContext.SaveChanges();
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

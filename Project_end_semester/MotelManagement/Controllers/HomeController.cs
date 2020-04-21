@@ -22,8 +22,8 @@ namespace MotelManagement.Controllers
         public async Task<ActionResult> Index()
         {
             IEnumerable<Room> rooms = await _dbContext.Rooms.Include(r => r.Guests).ToListAsync();
-
-            return View(rooms );
+            
+            return View(rooms);
         }
 
         public ActionResult About()

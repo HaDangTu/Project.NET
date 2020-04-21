@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity.EntityFramework;
-
+using MotelManagement.Models;
 namespace MotelManagement.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
@@ -74,7 +74,7 @@ namespace MotelManagement.ViewModels
         public string Username { get; set; }
         //------------------------------------------------------
 
-        //[Required]
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -95,6 +95,10 @@ namespace MotelManagement.ViewModels
         [Display(Name = "Role")]
         public string Role { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
+
+        [Display(Name = "Room")]
+        public string RoomId { get; set; }
+        public IEnumerable<Room> Rooms { get; set; }
         //----------------------------------------------------------
     }
 

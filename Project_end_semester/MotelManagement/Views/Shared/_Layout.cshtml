@@ -18,12 +18,33 @@
             </div>
             <div class="navbar-collapse collapse ">
                 <ul class="nav navbar-nav font-weight-bold">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                    <li>@Html.ActionLink("Khách trọ", "Index", "Guest", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                    <li>@Html.ActionLink("Phòng", "Index", "Room", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                    <li>@Html.ActionLink("Loại phòng", "Index", "RoomType", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li class="nav-item">@Html.ActionLink("Khách trọ", "Index", "Guest", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li class="nav-item">@Html.ActionLink("Phòng", "Index", "Room", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li class="nav-item">@Html.ActionLink("Loại phòng", "Index", "RoomType", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Thu tiền</a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Điện nước", "CollectMoney", "Power", new { area = "" }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Phòng", "CollectMoney", "Room", new { area = "" }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Báo cáo</a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Báo cáo doanh số", "ReportSale", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Thống kê nợ", "DebtStatistic", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Hóa đơn</a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Hóa đơn điện nước", "ReportSale", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Hóa đơn tiền phòng", "DebtStatistic", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link text-white text-white" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-white text-white" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

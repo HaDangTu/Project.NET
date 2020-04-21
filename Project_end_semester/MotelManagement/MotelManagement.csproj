@@ -183,9 +183,18 @@
     <Compile Include="Migrations\202004200234076_PopulateData.Designer.cs">
       <DependentUpon>202004200234076_PopulateData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004210218015_PopulateInvoicesAndElectricInfo.cs" />
+    <Compile Include="Migrations\202004210218015_PopulateInvoicesAndElectricInfo.Designer.cs">
+      <DependentUpon>202004210218015_PopulateInvoicesAndElectricInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004210241151_PopulateUserRole.cs" />
+    <Compile Include="Migrations\202004210241151_PopulateUserRole.Designer.cs">
+      <DependentUpon>202004210241151_PopulateUserRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ElectricityAndWaterInfo.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Utility\IdGenerator.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -360,6 +369,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Power\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -378,6 +388,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004200234076_PopulateData.resx">
       <DependentUpon>202004200234076_PopulateData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004210218015_PopulateInvoicesAndElectricInfo.resx">
+      <DependentUpon>202004210218015_PopulateInvoicesAndElectricInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004210241151_PopulateUserRole.resx">
+      <DependentUpon>202004210241151_PopulateUserRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -216,3 +216,5 @@ E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManage
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.InitialDB.resources
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csproj.GenerateResource.cache
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateData.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateInvoicesAndElectricInfo.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateUserRole.resources
