@@ -7,10 +7,10 @@ namespace MotelManagement.Utility
 {
     public class IdGenerator
     {
-        /* generate next ID function when insert data to database
-         * prefix: ST, U, N
-         * previousID: last ID in table of database
-         * addTime: attach 2 last number of year (20, 19, 21...) to ID (R20, ST20....)
+        /* tạo ra mã ID tiếp theo 
+         * prefix: tiền tố vd R, ST, H...
+         * previousID: ID của item cuối cùng trong mảng
+         * addTime: thêm 2 số cuối của năm (20, 19, 21...) vào tiền tố của id (R20, ST20....)
          * return next ID
          */
         public static string generateNextID(string prefix, string previousID, bool addTime)

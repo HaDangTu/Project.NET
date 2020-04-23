@@ -1,0 +1,123 @@
+﻿@model MotelManagement.ViewModels.PowerInfoViewModel
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success!</strong> @TempData["Success"]
+    </div>
+}
+else if (TempData["Fail"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Fail!</strong> @TempData["Fail"]
+    </div>
+}
+
+<h2 class="text-center">Cập nhật thông tin điện nước</h2>
+
+<div class="row">
+    <div class="col">
+        <table id="table" class="table table-striped table-hover" onclick="onItemClick(event)">
+            <tr>
+                <th class="thead-light">Phòng</th>
+                <th class="thead-light">Ngày</th>
+                <th class="thead-light">Chỉ số điện</th>
+                <th class="thead-light">Chỉ số nước</th>
+            </tr>
+            @foreach (var room in Model.Rooms)
+            {
+                var info = room.Infos.Where(i => i.Date.Month == (DateTime.Now.Month - 1)).SingleOrDefault();
+
+                <tr>
+                    <td hidden="hidden">@room.ID</td>
+                    <td><label>@room.Name</label></td>
+                    <td><label>@info.Date.ToShortDateString()</label></td>
+                    <td><label>@info.ElectricIndicator</label></td>
+                    <td><label>@info.WaterIndicator</label></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div>
+                <h4 id="roomName"></h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @id = "dateUpdate", @class = "form-control", @type = "date?" } })
+                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ElectricIndicator, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ElectricIndicator, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ElectricIndicator, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" hidden="hidden">
+                    @Html.LabelFor(model => model.RoomID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.RoomID, new { htmlAttributes = new { @id = "roomId", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RoomID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WaterIndicator, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.WaterIndicator, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.WaterIndicator, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function onItemClick(event) {
+            var table = document.getElementById("table");
+            var cell = event.target;
+            var rowIndex = cell.parentNode.rowIndex;
+            if (rowIndex > 0) {
+                document.getElementById("roomId").value = table.rows[rowIndex].cells[0].innerText;
+                document.getElementById("roomName").innerText = table.rows[rowIndex].cells[1].innerText;
+
+                var date = new Date(table.rows[rowIndex].cells[2].innerText);
+                date.setMonth(date.getMonth() + 1);
+
+                document.getElementById("dateUpdate").value = date.toLocaleDateString();
+            }
+        }
+
+        $("document").ready(function () {
+            
+            setTimeout(function () {
+                    $(".close").click();
+            }, 10000);
+        });
+    </script>
+}

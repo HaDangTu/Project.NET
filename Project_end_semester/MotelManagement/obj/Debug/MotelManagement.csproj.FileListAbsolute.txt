@@ -218,3 +218,5 @@ E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManage
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateData.resources
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateInvoicesAndElectricInfo.resources
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateUserRole.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.UpdateRoomIdOfInvoiceAndPowerInfo.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.UpdateRoomIdOfInvoiceAndPowerInfo1.resources

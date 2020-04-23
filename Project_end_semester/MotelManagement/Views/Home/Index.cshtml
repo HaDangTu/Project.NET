@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <h4 class="card-title text-success text-center">@item.Name</h4>
                     <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
-                    <input type="button" value="Thêm người" class="btn btn-primary" data-room-id="@item.ID"/>
+                    @Html.ActionLink("Thêm người", "Create", "Guest", new { area = "" }, new { @class = "card-link" })
                     @Html.ActionLink("Detail", "Detail", "Room", new { area = "" }, new { @class = "card-link" })
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h4 class="card-title text-warning text-center">@item.Name</h4>
                     <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
-                    <input type="button" value="Thêm người" class="btn btn-primary" data-room-id="@item.ID"/>
+                    @Html.ActionLink("Thêm người", "Create", "Guest", new { area = "" }, new { @class = "card-link" })
                     @Html.ActionLink("Detail", "Detail", "Room", new { area = "" }, new { @class = "card-link" })
                 </div>
             </div>
@@ -46,12 +46,20 @@
                 <div class="card-body">
                     <h4 class="card-title text-danger text-center">@item.Name</h4>
                     <p class="card-text ">Số lượng người: @guestInRoom/@maxGuest</p>
-                    <input type="button" value="Thêm người" class="btn btn-primary" data-room-id="@item.ID" disabled/>
+                    @Html.ActionLink("Thêm người", "Create", "Guest", new { area = "" }, new { @class = "card-link disabled-link" })
                     @Html.ActionLink("Detail", "Detail", "Room", new { area = "" }, new { @class = "card-link" })
                 </div>
             </div>
-        }
-        
+        }  
     }
 </div>
+
+@section Scripts {
+    <script>
+        $("document").ready(function () {
+            $(".disabled-link").removeAttr("href")
+                .addClass("text-secondary");
+        });
+    </script>
+}
 
