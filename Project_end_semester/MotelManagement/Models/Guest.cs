@@ -49,6 +49,12 @@ namespace MotelManagement.Models
         [StringLength(50, ErrorMessage = "{0} tối thiểu {2} kí tự", MinimumLength = 5)]
         public string Occupation { get; set; }
 
+        [Column("start_date")]
+        [Display(Name = "Ngày bắt đầu ở")]
+        [Required(ErrorMessage = "Vui lòng  nhập {0}")]
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
         [Column("room_id")]
         [Display(Name = "Phòng")]
         [Required]

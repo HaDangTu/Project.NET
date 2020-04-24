@@ -75,7 +75,7 @@ namespace MotelManagement.Controllers
                     r.Infos.Count(i => i.Date.Month == (DateTime.Now.Month)) < 1)
                 };
 
-                return View(model);
+                return View("Update", model);
             }
 
             //Mapping dữ liệu trên form

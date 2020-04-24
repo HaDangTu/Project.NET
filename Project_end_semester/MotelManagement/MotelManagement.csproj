@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PowerController.cs" />
     <Compile Include="Global.asax.cs">
@@ -200,15 +201,25 @@
     <Compile Include="Migrations\202004220305383_UpdateRoomIdOfInvoiceAndPowerInfo1.Designer.cs">
       <DependentUpon>202004220305383_UpdateRoomIdOfInvoiceAndPowerInfo1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004240113462_AlterTableGuest.cs" />
+    <Compile Include="Migrations\202004240113462_AlterTableGuest.Designer.cs">
+      <DependentUpon>202004240113462_AlterTableGuest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004240124373_UpdateGuestData.cs" />
+    <Compile Include="Migrations\202004240124373_UpdateGuestData.Designer.cs">
+      <DependentUpon>202004240124373_UpdateGuestData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ElectricityAndWaterInfo.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Utility\DebugLog.cs" />
     <Compile Include="Utility\IdGenerator.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Guest.cs" />
+    <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomType.cs" />
@@ -377,6 +388,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Power\Update.cshtml" />
+    <Content Include="Views\Invoice\CollectRoomInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -410,6 +422,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004220305383_UpdateRoomIdOfInvoiceAndPowerInfo1.resx">
       <DependentUpon>202004220305383_UpdateRoomIdOfInvoiceAndPowerInfo1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240113462_AlterTableGuest.resx">
+      <DependentUpon>202004240113462_AlterTableGuest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004240124373_UpdateGuestData.resx">
+      <DependentUpon>202004240124373_UpdateGuestData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
