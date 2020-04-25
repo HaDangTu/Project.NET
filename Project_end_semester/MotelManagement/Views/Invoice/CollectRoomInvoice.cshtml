@@ -108,30 +108,23 @@ else if (TempData["Fail"] != null)
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+        var url = "api/invoiceapi"
         $("document").ready(function () {
             $("#room-select").change(function (e) {
                 var select = $(e.target);
-                $.post("/Invoice/GetRoomDebtInfo", { id: select.val() })
+                var roomId = select.val();
+                $.post("/Invoice/GetRoomDebtInfo", { id: roomId})
                     .done(function (data) {
-                        //console.log(data);
-                        $("#from-date").val(data.FromDate);
-                        $("#to-date").val(data.ToDate);
-                        $("#debt").val(data.Debt);
+                        console.log(data);
+                        //$("#from-date").val(data.FromDate);
+                        //$("#to-date").val(data.ToDate);
+                        //$("#debt").val(data.Debt);
                     })
                     .fail(function () {
                         console.log("something wrong");
                     });
             });
 
-
-            //$("#proceeds").change(function (e) {
-            //    var moneyStr = $(e.target).val();
-
-            //    var money = parseInt(moneyStr.replace(/,/g, ""));
-                
-
-                
-            //});
 
             $("#proceeds").keyup(function (e) {
                 var value = $(e.target).val();

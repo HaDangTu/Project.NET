@@ -31,6 +31,38 @@ namespace MotelManagement.ViewModels
         public string RoomID { get; set; }
         public IEnumerable<Room> Rooms { get; set; }
 
+        [Display(Name = "Chỉ số cũ")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string ElectricOldIndicator { get; set; }
+
+        [Display(Name = "Chỉ số mới")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string ElectricNewIndicator { get; set; }
+
+        [Display(Name = "Tổng điện năng tiêu thụ")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string SumElectricUsage { get; set; }
+
+        [Display(Name = "Thành tiền")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string ElectricMoney { get; set; }
+
+        [Display(Name = "Chỉ số cũ")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string WaterOldIndicator { get; set; }
+
+        [Display(Name = "Chỉ số mới")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string WaterNewIndicator { get; set; }
+
+        [Display(Name = "Tổng lượng nước tiêu thụ")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string SumWaterUsage { get; set; }
+
+        [Display(Name = "Thành tiền")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string WaterMoney { get; set; }
+
         [Required]
         [Display(Name = "Tổng số tiền")]
         [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]

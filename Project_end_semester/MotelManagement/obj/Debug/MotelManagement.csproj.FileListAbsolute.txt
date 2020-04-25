@@ -222,3 +222,13 @@ E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManage
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.UpdateRoomIdOfInvoiceAndPowerInfo1.resources
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.AlterTableGuest.resources
 E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.UpdateGuestData.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.CreateParameterTable.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateParameters.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PopulateParameters1.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.Migrations.PrepopulateParameter.resources
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\System.Net.Http.Formatting.dll
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\System.Web.Http.dll
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\System.Web.Http.WebHost.dll
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\System.Net.Http.Formatting.xml
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\System.Web.Http.xml
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\System.Web.Http.WebHost.xml

@@ -24,6 +24,7 @@ namespace MotelManagement.DAL
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<ElectricityAndWaterInfo> Infos { get; set; }
+        public DbSet<Parameter> Parameters { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
