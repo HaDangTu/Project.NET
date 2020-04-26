@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Diagnostics;
 using MotelManagement.Models;
 using MotelManagement.ViewModels;
 using MotelManagement.DAL;
@@ -110,9 +112,12 @@ namespace MotelManagement.Controllers
 
             //Save invoice
             _dbContext.Invoices.Add(invoice);
-            _dbContext.SaveChanges();
+            if (_dbContext.SaveChanges() > 0)
+                PrintRoomInvoice(viewModel.RoomName, invoice.FromDate, invoice.ToDate,
+                    invoice.Content, (invoice.Proceeds - invoice.ExcessCash), invoice.Proceeds, invoice.ExcessCash);
 
-            return RedirectToAction("Index", "Invoice");
+
+            return RedirectToAction("Index");
         }
 
 
@@ -223,27 +228,91 @@ namespace MotelManagement.Controllers
                 ExcessCash = double.Parse(viewModel.ExcessCash)
             };
 
+            
             _dbContext.Invoices.Add(invoice);
-            _dbContext.SaveChanges();
+            if (_dbContext.SaveChanges() > 0)
+                PrintPowerInvoice(viewModel.RoomName, invoice.FromDate, invoice.ToDate, invoice.Content,
+                    viewModel.ElectricOldIndicator, viewModel.ElectricNewIndicator, viewModel.SumElectricUsage, viewModel.ElectricMoney,
+                    viewModel.WaterOldIndicator, viewModel.WaterNewIndicator, viewModel.SumWaterUsage, viewModel.WaterMoney,
+                    (invoice.Proceeds - invoice.ExcessCash), invoice.Proceeds, invoice.ExcessCash);
 
-            return RedirectToAction("Index", "Invoice");
+            return RedirectToAction("Index");
+        }
+
+        private void PrintRoomInvoice(string roomName, DateTime fromDate, DateTime toDate, 
+            string content, double debt, double proceeds, double excessCash)
+        {
+            string fileName = roomName + "_invoice_" + DateTime.Now.Millisecond.ToString() + ".txt";
+            string path = HttpRuntime.AppDomainAppPath + "\\" + fileName;
+            StreamWriter writer = new StreamWriter(path);
+            writer.WriteLine("================================================================================");
+            writer.WriteLine("=                          Hóa đơn tiền phòng trọ                              =");
+            writer.WriteLine("=                 Từ ngày {0, 9}  Đến ngày {1, 9}                      =",
+                fromDate.ToString("dd/MM/yyyy"), toDate.ToString("dd/MM/yyyy"));
+            writer.WriteLine("=                              {0, 9}                                       =", roomName);
+            writer.WriteLine("================================================================================");
+            writer.WriteLine("");
+            writer.WriteLine("                  Nội dung:        {0}                      ", content);
+            writer.WriteLine("                  Tiền thuê phòng: {0, 15} VND                         ", 
+                debt.ToString("N0"));
+            writer.WriteLine("                  Tiền khách đưa:  {0, 15} VND                         ", 
+                proceeds.ToString("N0"));
+            writer.WriteLine("                  Tiền thừa:       {0, 15} VND                         ", 
+                excessCash.ToString("N0"));
+            writer.WriteLine("--------------------------------------------------------------------------------");
+            writer.WriteLine("");
+            writer.WriteLine("        Người thuê                                     Chủ nhà trọ              ");
+            writer.WriteLine("   (Ký và ghi rõ họ tên)                          (Ký và ghi rõ họ tên)         ");
+            writer.Close();
+            Process.Start(path);
+        }
+
+        private void PrintPowerInvoice(string roomName, DateTime fromDate, DateTime toDate, 
+            string content, string oldEleIndi, string newEleIndi, string sumEle, string elePrice, 
+            string oldWaterIndi, string newWaterIndi, string sumWater, string waterPrice, 
+            double debt, double proceeds, double excessCash)
+        {
+            string fileName = roomName + "_power_invoice" + DateTime.Now.Millisecond.ToString() + ".txt";
+            string path = HttpRuntime.AppDomainAppPath + "\\" + fileName;
+            StreamWriter writer = new StreamWriter(path);
+            writer.WriteLine("================================================================================");
+            writer.WriteLine("=                          Hóa đơn tiền điện nước                              =");
+            writer.WriteLine("=                 Từ ngày {0, 9}  Đến ngày {1, 9}                      =",
+                fromDate.ToString("dd/MM/yyyy"), toDate.ToString("dd/MM/yyyy"));
+            writer.WriteLine("=                              {0, 9}                                       =",
+                roomName);
+            writer.WriteLine("================================================================================");
+            writer.WriteLine("");
+            writer.WriteLine("--------------------------------------------------------------------------------");
+            writer.WriteLine("            Thông tin điện                                                      ");
+            writer.WriteLine("                  Chỉ số cũ:  {0, 12}       Chỉ số mới:  {1, 12}        ",
+                oldEleIndi, newEleIndi);
+            writer.WriteLine("                  Tổng lượng điện tiêu thụ:  {0, 15} Kwh                    ",
+                sumEle);
+            writer.WriteLine("                  Thành tiền:                {0, 15} VND                   ",
+                elePrice);
+            writer.WriteLine("--------------------------------------------------------------------------------");
+            writer.WriteLine("            Thông tin nước                                                      ");
+            writer.WriteLine("                  Chỉ số cũ:  {0, 12}       Chỉ số mới:  {1, 12}        ",
+                oldWaterIndi, newWaterIndi);
+            writer.WriteLine("                  Tổng lượng nước tiêu thụ:  {0, 15} m3                    ",
+                sumWater);
+            writer.WriteLine("                  Thành tiền:                {0, 15} VND                   ",
+                waterPrice);
+            writer.WriteLine("--------------------------------------------------------------------------------");
+            writer.WriteLine("                  Nội dung:        {0}                      ", content);
+            writer.WriteLine("                  Tổng số tiền:    {0, 15} VND                         ",
+                debt.ToString("N0"));
+            writer.WriteLine("                  Tiền khách đưa:  {0, 15} VND                         ",
+                proceeds.ToString("N0"));
+            writer.WriteLine("                  Tiền thừa:       {0, 15} VND                         ",
+                excessCash.ToString("N0"));
+            writer.WriteLine("--------------------------------------------------------------------------------");
+            writer.WriteLine("");
+            writer.WriteLine("        Người thuê                                     Chủ nhà trọ              ");
+            writer.WriteLine("   (Ký và ghi rõ họ tên)                          (Ký và ghi rõ họ tên)         ");
+            writer.Close();
+            Process.Start(path);
         }
     }
-
-    //public class Result
-    //{
-    //    public string FromDate { get; set; }
-    //    public string ToDate { get; set; }
-    //    public string Debt { get; set; }
-
-    //    public string ElectricOldIndicator { get; set; }
-    //    public string ElectricNewIndicator { get; set; }
-    //    public string SumElectricUsage { get; set; }
-    //    public string ElectricMoney { get; set; }
-
-    //    public string WaterOldIndicator { get; set; }
-    //    public string WaterNewIndicator { get; set; }
-    //    public string SumWaterUsage { get; set; }
-    //    public string WaterMoney { get; set; }
-    //}
 }
