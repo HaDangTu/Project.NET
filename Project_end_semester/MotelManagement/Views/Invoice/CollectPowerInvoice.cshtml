@@ -6,27 +6,20 @@
 }
 
 <h3>Thu tiền điện nước</h3>
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> @TempData["Success"]
-    </div>
-}
-else if (TempData["Fail"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Fail!</strong> @TempData["Fail"]
-    </div>
-}
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div>
-
+        <h5>@Model.RoomName</h5>
+        <div>
+            @Html.EditorFor(model => model.RoomID,
+            new { htmlAttributes = new { @hidden="hidden" } } )
+            @Html.EditorFor(model => model.RoomName,
+                 new { htmlAttributes = new { @hidden="hidden" } } )
+        </div>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -54,11 +47,11 @@ else if (TempData["Fail"] != null)
             </div>
         </div>
 
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.RoomID, htmlAttributes: new { @class = "col-1" })
-            @Html.DropDownListFor(model => model.RoomID, new SelectList(Model.Rooms, "ID", "Name", 1),
-        htmlAttributes: new { @class = "form-control col-md-2", @id = "room-select" })
+        <div class="form-row mt-2">
+            @Html.LabelFor(model => model.CollectionDate, htmlAttributes: new { @class = "font-weight-bold col-2" })
+            <div class="col-4">
+                @Html.EditorFor(model => model.CollectionDate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
         </div>
 
         <h5 class="mt-3">Thông tin điện</h5>
@@ -192,7 +185,7 @@ else if (TempData["Fail"] != null)
             </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row mt-2">
             @Html.LabelFor(model => model.ExcessCash,
                 htmlAttributes: new { @class = "font-weight-bold col-2"} )
             <div class="col-2">
@@ -220,53 +213,7 @@ else if (TempData["Fail"] != null)
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $("document").ready(function () {
-            $("#room-select").change(function (e) {
-                var select = $(e.target);
-                $.post("/Invoice/GetPowerOfRoom", { id: select.val() })
-                    .done(function (data) {
-                        //console.log(data);
-                        $("#from-date").val(data.FromDate);
-                        $("#from-date-text").text(data.FromDate);
-
-                        $("#to-date").val(data.ToDate);
-                        $("#to-date-text").text(data.ToDate);
-
-                        $("#old-el").val(data.ElectricOldIndicator);
-                        $("#old-el-text").text(data.ElectricOldIndicator);
-                        $("#new-el").val(data.ElectricNewIndicator);
-                        $("#new-el-text").text(data.ElectricNewIndicator);
-                        $("#sum-el-usage").val(data.SumElectricUsage);
-                        $("#sum-el-text").text(data.SumElectricUsage);
-                        $("#el-money").val(data.ElectricMoney);
-                        $("#el-money-text").text(data.ElectricMoney);
-
-                        $("#old-water").val(data.WaterOldIndicator);
-                        $("#old-water-text").text(data.WaterOldIndicator);
-                        $("#new-water").val(data.WaterNewIndicator);
-                        $("#new-water-text").text(data.WaterNewIndicator);
-                        $("#sum-water-usage").val(data.SumWaterUsage);
-                        $("#sum-water-text").text(data.SumWaterUsage);
-                        $("#water-money").val(data.WaterMoney);
-                        $("#water-money-text").text(data.WaterMoney);
-
-                        $("#debt").val(data.Debt);
-                        $("#debt-text").text(data.Debt);
-                    })
-                    .fail(function () {
-                        console.log("something wrong");
-                    });
-            });
-
-
-            //$("#proceeds").change(function (e) {
-            //    var moneyStr = $(e.target).val();
-
-            //    var money = parseInt(moneyStr.replace(/,/g, ""));
-
-
-
-            //});
-
+            
             $("#proceeds").keyup(function (e) {
                 var value = $(e.target).val();
 

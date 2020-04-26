@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MotelManagement.Models.Room>
+@using MotelManagement.DAL
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="card-columns">
+
+    @foreach (var room in Model)
+    {
+        int guestInRoom = room.Guests.Count(g => g.StateID == "S01");
+        int maxGuest = room.RoomType.NumberOfGuest;
+
+        var oldPower = room.Infos.Where(i => i.Date.Month == DateTime.Now.Month - 1).SingleOrDefault();
+        var newPower = room.Infos.Where(i => i.Date.Month == DateTime.Now.Month).SingleOrDefault();
+
+        ApplicationDbContext db_Context = new ApplicationDbContext();
+        int electricPrice = int.Parse(db_Context.Parameters
+            .Where(p => p.Name == "Giá điện").SingleOrDefault().Value);
+        int waterPrice = int.Parse(db_Context.Parameters
+            .Where(p => p.Name == "Giá nước").SingleOrDefault().Value);
+
+        long sumElectric = newPower.ElectricIndicator - oldPower.ElectricIndicator;
+        long sumWater = newPower.WaterIndicator - oldPower.WaterIndicator;
+
+        long sumMoney = (sumElectric * electricPrice) + (sumWater * waterPrice);
+
+        var invoice = room.Invoices.Where(i => i.FromDate.Month == DateTime.Now.Month - 1 &&
+        i.Content.Contains("điện")).SingleOrDefault();
+        var roomInvoice = room.Invoices.Where(i => i.FromDate.Month == DateTime.Now.Month - 1 &&
+        i.Content.Contains("phòng")).SingleOrDefault();
+
+        <div class="card shadow-sm border-primary card-pointer">
+            
+            <div class="card-body">
+                <h4 class="card-title text-primary text-center">@room.Name</h4>
+                <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
+                @if (roomInvoice != null)
+                {
+                    <p class="card-text font-weight-bold text-success">
+                        Tiền phòng: @room.RoomType.Price.ToString("N0") VND
+                    </p>
+                }
+                else
+                {
+                    <p class="card-text font-weight-bold text-danger">
+                        Tiền phòng: @room.RoomType.Price.ToString("N0") VND
+                    </p>
+                }
+                @if (invoice != null)
+                {
+                    <p class="card-text font-weight-bold text-success">
+                        Điện nước: @sumMoney.ToString("N0") VND
+                    </p>
+                }
+                else
+                {
+                    <p class="card-text font-weight-bold text-danger">
+                        Điện nước: @sumMoney.ToString("N0") VND
+                    </p>
+                    @Html.ActionLink("Điện nước", "CollectPowerInvoice", "Invoice", new { id = room.ID }, new { @class = "card-link" })
+                }
+                @Html.ActionLink("Phòng", "CollectRoomInvoice", "Invoice", new { id = room.ID }, new { @class = "card-link" })
+
+            </div>
+        </div>
+    }
+</div>

@@ -29,7 +29,7 @@ namespace MotelManagement.ViewModels
         [Required]
         [Display(Name = "Phòng")]
         public string RoomID { get; set; }
-        public IEnumerable<Room> Rooms { get; set; }
+        public string RoomName { get; set; }
 
         [Display(Name = "Chỉ số cũ")]
         [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]

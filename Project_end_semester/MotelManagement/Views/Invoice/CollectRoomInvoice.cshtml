@@ -6,94 +6,92 @@
 }
 
 <h2>Thu tiền phòng</h2>
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> @TempData["Success"]
-    </div>
-}
-else if (TempData["Fail"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Fail!</strong> @TempData["Fail"]
-    </div>
-}
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div>
         @*<h4>InvoiceViewModel</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RoomID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RoomID, new SelectList(Model.Rooms, "ID", "Name", 1),
-                     htmlAttributes: new {@id="room-select", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoomID, "", new { @class = "text-danger" })
-            </div>
+        <h5>@Model.RoomName</h5>
+        <div>
+            @Html.EditorFor(model => model.RoomID,
+            new { htmlAttributes = new { @hidden="hidden" } } )
+            @Html.EditorFor(model => model.RoomName,
+                 new { htmlAttributes = new { @hidden="hidden" } } )
         </div>
+       
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="form-row">
+            <div class="col-1">
+                @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "font-weight-bold" })
+            </div>
+            <div class="col-1" id="from-date">
+                <span id="from-date-text">
+                    @Model.FromDate.ToString("dd-MM-yyyy")
+                </span>
                 @Html.EditorFor(model => model.FromDate,
-               new { htmlAttributes = new { @class = "form-control", @id = "from-date" } })
-                @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+               new { htmlAttributes = new { @id = "from-date", @hidden="hidden" } } )
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @type = "date", @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-1"></div>
+            <div class="col-1">
+                @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "font-weight-bold" })
+            </div>
+            <div class="col-1">
+                <span id="to-date-text">
+                    @Model.ToDate.ToString("dd-MM-yyyy")
+                </span>
                 @Html.EditorFor(model => model.ToDate,
-               new { htmlAttributes = new {@class = "form-control", @id = "to-date" } })
-                @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+               new { htmlAttributes = new { @id = "to-date", @hidden = "hidden" } } )
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CollectionDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CollectionDate, "{0:dd-MM-yyyy}",
-               new { htmlAttributes = new {@class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CollectionDate, "", new { @class = "text-danger" })
+        <div class="form-row mt-2">
+            @Html.LabelFor(model => model.CollectionDate, htmlAttributes: new { @class = "font-weight-bold col-2" })
+            <div class="col-4">
+                @Html.EditorFor(model => model.CollectionDate, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Debt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="form-row mt-2">
+            @Html.LabelFor(model => model.Debt, htmlAttributes: new { @class = "font-weight-bold col-2" })
+            <p class="text-danger col-4">
+                <span id="debt-text">
+                    @Model.Debt
+                </span> VND
+            </p>
+            <div class="col-4">
                 @Html.EditorFor(model => model.Debt,
-               new { htmlAttributes = new { @class = "form-control", @id="debt" } })
-                @Html.ValidationMessageFor(model => model.Debt, "", new { @class = "text-danger" })
+               new { htmlAttributes = new { @class = "form-control", @id = "debt", @hidden="hidden" } })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Proceeds, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Proceeds,
-               new { htmlAttributes = new { @class = "form-control", @id="proceeds" } })
-                @Html.ValidationMessageFor(model => model.Proceeds, "", new { @class = "text-danger" })
+        <div class="form-row mt-2">
+            @Html.LabelFor(model => model.Proceeds, htmlAttributes: new { @class = "font-weight-bold col-2" })
+            <div class="col-4">
+                @Html.EditorFor(model => model.Proceeds, new { htmlAttributes = new { @class = "form-control", @id = "proceeds" } })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExcessCash, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="form-row mt-2">
+            @Html.LabelFor(model => model.ExcessCash, htmlAttributes: new { @class = "font-weight-bold col-2" })
+            <p class="text-success col-4">
+                <span id="excess-cash-text">
+                    @Model.ExcessCash
+                </span> VND
+            </p>
+            <div class="col-4">
                 @Html.EditorFor(model => model.ExcessCash,
-               new { htmlAttributes = new { @class = "form-control", @id="excess-cash" } })
-                @Html.ValidationMessageFor(model => model.ExcessCash, "", new { @class = "text-danger" })
+               new { htmlAttributes = new { @class = "form-control", @id = "excess-cash", @hidden="hidden" } })
             </div>
         </div>
 
-        <div class="form-group">
+
+        <div class="form-row mt-4">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Xuất hóa đơn" class="btn btn-primary" />
             </div>
@@ -108,24 +106,7 @@ else if (TempData["Fail"] != null)
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        var url = "api/invoiceapi"
         $("document").ready(function () {
-            $("#room-select").change(function (e) {
-                var select = $(e.target);
-                var roomId = select.val();
-                $.post("/Invoice/GetRoomDebtInfo", { id: roomId})
-                    .done(function (data) {
-                        console.log(data);
-                        //$("#from-date").val(data.FromDate);
-                        //$("#to-date").val(data.ToDate);
-                        //$("#debt").val(data.Debt);
-                    })
-                    .fail(function () {
-                        console.log("something wrong");
-                    });
-            });
-
-
             $("#proceeds").keyup(function (e) {
                 var value = $(e.target).val();
 
@@ -138,12 +119,11 @@ else if (TempData["Fail"] != null)
                 debt = debt - money;
 
                 $("#proceeds").val(money.toLocaleString("en-US"));
+                $("#debt-text").text(debt < 0 ? "0" : debt.toLocaleString("en-US"));
                 $("#debt").val(debt < 0 ? "0" : debt.toLocaleString("en-US"));
+                $("#excess-cash-text").text(debt < 0 ? (-debt).toLocaleString("en-US") : "0");
                 $("#excess-cash").val(debt < 0 ? (-debt).toLocaleString("en-US") : "0");
-            })
-        });
-
-        $("document").ready(function () {
+            });
 
             setTimeout(function () {
                 $(".close").click();

@@ -181,7 +181,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceApiController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PowerController.cs" />
@@ -418,6 +417,7 @@
     <Content Include="Views\Power\Update.cshtml" />
     <Content Include="Views\Invoice\CollectRoomInvoice.cshtml" />
     <Content Include="Views\Invoice\CollectPowerInvoice.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
