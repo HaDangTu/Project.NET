@@ -1,0 +1,74 @@
+﻿@model MotelManagement.Models.Guest
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Room.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.Name)
+        </dd>
+
+        <h4>Thông Tin Khách Trọ</h4>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDentityCardNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDentityCardNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeTown)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HomeTown)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Occupation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Occupation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
