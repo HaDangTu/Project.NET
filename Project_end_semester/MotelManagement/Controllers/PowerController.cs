@@ -68,14 +68,11 @@ namespace MotelManagement.Controllers
             //Kiểm tra các trường trên form đã valid hay không
             if (!ModelState.IsValid)
             {
-                PowerInfoViewModel model = new PowerInfoViewModel()
-                {
-                    Rooms = _dbContext.Rooms.Include(i => i.Infos)
-                    .Where(r => r.Guests.Count(g => g.StateID == "S01") > 0 &&
-                    r.Infos.Count(i => i.Date.Month == (DateTime.Now.Month)) < 1)
-                };
+                viewModel.Rooms = _dbContext.Rooms.Include(i => i.Infos)
+                .Where(r => r.Guests.Count(g => g.StateID == "S01") > 0 &&
+                    r.Infos.Count(i => i.Date.Month == (DateTime.Now.Month)) < 1);
 
-                return View("Update", model);
+                return View("Update", viewModel);
             }
 
             //Mapping dữ liệu trên form

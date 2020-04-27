@@ -20,9 +20,10 @@ else if (TempData["Fail"] != null)
 }
 
 <h2 class="text-center">Cập nhật thông tin điện nước</h2>
-
-<div class="row">
-    <div class="col">
+<hr />
+<div class="row mt-5">
+    <div class="col-5 p2">
+        <h6 class="text-center"><strong>Danh sách phòng</strong></h6>
         <table id="table" class="table table-striped table-hover" onclick="onItemClick(event)">
             <tr>
                 <th class="thead-light">Phòng</th>
@@ -44,54 +45,55 @@ else if (TempData["Fail"] != null)
             }
         </table>
     </div>
-    <div class="col">
+    <div class="col-5 p2">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div>
-                <h4 id="roomName"></h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @id = "dateUpdate", @class = "form-control", @type = "date?" } })
-                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+            <h6 class="text-center mb-0"><strong>Thông tin điện nước</strong></h6>
+            <p class="text-center mb-0"><strong id="roomName"></strong></p>
+            <div class="text-center mb-0">
+                <strong>
+                    @Html.LabelFor(model => model.Date)
+                </strong> <strong id="date-text"></strong>
+            </div>
+            @Html.EditorFor(model => model.Date,
+                   new { htmlAttributes = new { @id = "date", @class = "form-control", @type = "date", @hidden="hidden" } })
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ElectricIndicator, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.ElectricIndicator, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ElectricIndicator, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group" hidden="hidden">
-                    @Html.LabelFor(model => model.RoomID, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.RoomID, new { htmlAttributes = new { @id = "roomId", @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.RoomID, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.WaterIndicator, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.WaterIndicator, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.WaterIndicator, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
-                    </div>
+            <div class="form-row mt-2">
+                @Html.LabelFor(model => model.ElectricIndicator, htmlAttributes: new { @class = "control-label col-3 mt-1" })
+                <div class="col">
+                    @Html.EditorFor(model => model.ElectricIndicator, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ElectricIndicator, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="form-group" hidden="hidden">
+                @Html.LabelFor(model => model.RoomID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RoomID, new { htmlAttributes = new { @id = "roomId", @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RoomID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row mt-2">
+                @Html.LabelFor(model => model.WaterIndicator, htmlAttributes: new { @class = "control-label col-3 mt-1" })
+                <div class="col">
+                    @Html.EditorFor(model => model.WaterIndicator, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.WaterIndicator, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row mt-4 justify-content-center">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+
         }
+    </div>
+
+    <div class="col">
+
     </div>
 </div>
 
@@ -109,7 +111,8 @@ else if (TempData["Fail"] != null)
                 var date = new Date(table.rows[rowIndex].cells[2].innerText);
                 date.setMonth(date.getMonth() + 1);
 
-                document.getElementById("dateUpdate").value = date.toLocaleDateString();
+                document.getElementById("date").value = date.toLocaleDateString();
+                document.getElementById("date-text").innerText = date.toLocaleDateString();
             }
         }
 

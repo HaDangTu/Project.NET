@@ -28,6 +28,7 @@ namespace MotelManagement.Models
         [Column("price")]
         [Display(Name = "Giá thuê phòng")]
         [Required(ErrorMessage = "Vui lòng nhập {0}")]
+        [DisplayFormat(DataFormatString = "{0:N0} VND", ApplyFormatInEditMode = true)]
         [Range(1000000, 100000000, ErrorMessage ="{0} phải trên {1:N0} VND")]
         public double Price { get; set; }
 
