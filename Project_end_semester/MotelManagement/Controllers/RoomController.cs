@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net;
 using System.Data.Entity;
 using System.Web.Mvc;
 using MotelManagement.DAL;
@@ -101,6 +102,20 @@ namespace MotelManagement.Controllers
             _dbContext.Rooms.Remove(room);
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult RoomDetail(string id)
+        {
+            IEnumerable<Room> rooms = _dbContext.Rooms.Include(r => r.RoomType)
+                .Include(r => r.Guests);
+
+            Room room = rooms.Where(r => r.ID == id).SingleOrDefault();
+            if (room == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            return View(room);
         }
     }
 }

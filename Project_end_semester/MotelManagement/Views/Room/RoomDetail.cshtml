@@ -1,0 +1,56 @@
+﻿@model MotelManagement.Models.Room
+
+@{
+    ViewBag.Title = "RoomDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>RoomDetail</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    @*<div class="row">
+        @Html.LabelFor(model => model.RoomType.Name,
+       new { htmlAttributes = new { @class = "font-weight-bold col-sm-2" } })
+        @Html.DisplayFor(model => model.RoomType.Name,
+       new { htmlAttributes = new { @class = "col-sm-2" } })
+    </div>*@
+        
+    <h5>Thành viên </h5>
+    <table class="table table-dark table-striped table-hover">
+        <tr>
+            <th class="thead-dark">STT</th>
+            <th class="thead-dark">Họ tên</th>
+            <th class="thead-dark">Giới tính</th>
+            <th class="thead-dark">Ngày sinh</th>
+            <th class="thead-dark">Quê quán</th>
+            <th class="thead-dark">Nghề nghiệp</th>
+        </tr>
+        @{ 
+            var guests = Model.Guests.Where(g => g.StateID == "S01");
+            int i = 0;
+            foreach (var item in guests)
+            {
+                string birthday = DateTime.Parse(item.Birthday).ToString("dd/MM/yyyy");
+                <tr>
+                    <td>@i</td>
+                    <td>@item.Name</td>
+                    <td>@item.Gender.Name</td>
+                    <td>@birthday</td>
+                    <td>@item.HomeTown</td>
+                    <td>@item.Occupation</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</p>
