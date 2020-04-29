@@ -35,6 +35,7 @@ namespace MotelManagement.Controllers
         }
 
         // GET: CollectPowerInvoice
+        //[Authorize(Roles = "Owner")]
         public ActionResult CollectRoomInvoice(string id)
         {
             if (id == null)
@@ -81,6 +82,7 @@ namespace MotelManagement.Controllers
         // POST: CollectPowerInvoice
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Owner")]
         public ActionResult CollectRoomInvoice(string id, InvoiceViewModel viewModel)
         {
             //Check infomation is valid
@@ -122,6 +124,7 @@ namespace MotelManagement.Controllers
 
 
         //GET: Invoice/CollectPowerInvoice
+        //[Authorize(Roles = "Owner")]
         public ActionResult CollectPowerInvoice(string id)
         {
             if (id == null)
@@ -199,6 +202,7 @@ namespace MotelManagement.Controllers
         //POST: Invoice/CollectPowerInvoice
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Owner")]
         public ActionResult CollectPowerInvoice(InvoiceViewModel viewModel)
         {
             //Check infomation is valid

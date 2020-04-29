@@ -24,6 +24,7 @@ namespace MotelManagement.Controllers
         /* GET: Power/Update
          * 
          */
+        //[Authorize(Roles = "Owner")]
         public ActionResult Update()
         {
             /* Sử dụng viewmodel/model tại đây đều được
