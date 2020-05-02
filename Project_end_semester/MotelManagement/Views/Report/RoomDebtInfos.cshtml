@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MotelManagement.Models.Invoice>
+@{
+    ViewBag.Title = "RoomDebtInfos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <style>
+        .border {
+            height: 50px;
+            border: 4px #1C6EA4 groove !important;
+            border-radius: 25px 25px 0px 25px;
+            margin-bottom: 20px;
+        }
+
+        .bordershadow {
+            -webkit-box-shadow: 5px 8px 10px -8px rgba(0,0,0,0.65);
+            box-shadow: 5px 8px 10px -8px rgba(0,0,0,0.65);
+        }
+
+        .list_text {
+            margin: auto;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form action="" class="container text-center">
+        <h2 class="header" style="margin:20px 0">Thống kê nợ tiền phòng</h2>
+        <h2 class="header" style="margin:20px 0">@ViewBag.RoomName </h2>
+        <main>
+            <div>
+
+                @foreach (var item in Model)
+                {
+                    <div class="row border bordershadow">
+                        <div class="col list_text"><p style="text-align:left;font-size: 20px; font-weight: 500;">@item.Content</p></div>
+                        <div class="col row">
+                            <div class="col list_text"><p style="color: red;font-size: 18px;">Còn nợ:</p></div>
+                            <div class="col list_text"><p style="color: red;font-size: 18px;">@string.Format("{0:#,###.## VND}", item.Debt)</p></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+        <div></div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/datatables-demo.js"></script>
+</body>
+</html>
+
