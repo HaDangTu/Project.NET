@@ -9,6 +9,7 @@ using MotelManagement.DAL;
 using MotelManagement.ViewModels;
 using MotelManagement.Models;
 using MotelManagement.Utility;
+using System.Web.Routing;
 
 namespace MotelManagement.Controllers
 {
@@ -25,6 +26,24 @@ namespace MotelManagement.Controllers
             IEnumerable<Room> viewModel = _dbContext.Rooms.Include(r => r.RoomType);
             return View(viewModel);
         }
+        [HttpPost]
+        public ActionResult Index(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString)) // kiểm tra chuỗi tìm kiếm có rỗng/null hay không
+            {
+                var links = _dbContext.Rooms.Include(r => r.RoomType)
+                    .Where(s => s.Name.Contains(searchString)); //lọc theo chuỗi tìm kiếm
+                return View(links); //trả về kết quả
+            }
+            IEnumerable<Room> viewModel = _dbContext.Rooms.Include(r => r.RoomType);
+            return View(viewModel);
+        }
+        [HttpPost]
+        //public ActionResult Index(RoomInfoViewModel viewmodel)
+        //{
+        //    IEnumerable<Room> test = _dbContext.Rooms.Include(r => r.RoomType);
+        //    return View(test);
+        //}
         //[Authorize(Roles = "Owner")]
         public ActionResult Create()
         {
@@ -120,5 +139,19 @@ namespace MotelManagement.Controllers
 
             return View(room);
         }
+        //public ActionResult AdvancedSearch()
+        //{
+        //    var viewModel = new RoomInfoViewModel
+        //    {
+        //        RoomTypes = _dbContext.RoomTypes.ToList()
+        //    };
+        //    return View(viewModel);
+        //}
+        //[HttpPost]
+        //public ActionResult AdvancedSearch(RoomInfoViewModel ViewModel)
+        //{
+        //    return RedirectToAction("Index",
+        //        new RouteValueDictionary(new { Controller = "Room", Action = "Index", viewmodel = ViewModel }));
+        //}
     }
 }

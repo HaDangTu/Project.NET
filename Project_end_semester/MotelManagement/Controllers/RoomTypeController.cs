@@ -23,6 +23,18 @@ namespace MotelManagement.Controllers
             var RoomType = _dbContext.RoomTypes;
             return View(RoomType);
         }
+        [HttpPost]
+        public ActionResult Index(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString)) // kiểm tra chuỗi tìm kiếm có rỗng/null hay không
+            {
+                var links = _dbContext.RoomTypes
+                    .Where(s => s.Name.Contains(searchString)); //lọc theo chuỗi tìm kiếm
+                return View(links); //trả về kết quả
+            }
+            var viewModel = _dbContext.RoomTypes;
+            return View(viewModel);
+        }
         public ActionResult Create()
         {
             return View();

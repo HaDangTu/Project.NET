@@ -25,6 +25,18 @@ namespace MotelManagement.Controllers
             IEnumerable<Guest> viewModel = _dbContext.Guests.Include(r => r.Gender).Include(r => r.Room);
             return View(viewModel);
         }
+        [HttpPost]
+        public ActionResult Index(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString)) // kiểm tra chuỗi tìm kiếm có rỗng/null hay không
+            {
+                var links = _dbContext.Guests.Include(r => r.Gender).Include(r => r.Room)
+                    .Where(s => s.Name.Contains(searchString)); //lọc theo chuỗi tìm kiếm
+                return View(links); //trả về kết quả
+            }
+            IEnumerable<Guest> viewModel = _dbContext.Guests.Include(r => r.Gender).Include(r => r.Room);
+            return View(viewModel);
+        }
         public ActionResult Create()
         {
             var viewModel = new GuestInfoViewModel
