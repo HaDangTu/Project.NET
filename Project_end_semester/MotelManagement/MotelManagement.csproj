@@ -185,7 +185,6 @@
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PowerController.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\RoomTypeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,9 +249,6 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Guest.cs" />
-    <Compile Include="ViewModels\AllPowerDebtViewModel.cs" />
-    <Compile Include="ViewModels\AllRoomDebtViewModel.cs" />
-    <Compile Include="ViewModels\DebtViewModels.cs" />
     <Compile Include="ViewModels\GuestInfoViewModel.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -261,7 +257,6 @@
     <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\PowerDebt.cs" />
     <Compile Include="ViewModels\PowerInfoViewModel.cs" />
     <Compile Include="ViewModels\RoomInfoViewModel.cs" />
   </ItemGroup>
@@ -445,10 +440,6 @@
     <Content Include="Views\RoomType\Index.cshtml" />
     <Content Include="Views\Room\RoomDetail.cshtml" />
     <Content Include="Views\Room\AdvancedSearch.cshtml" />
-    <Content Include="Views\Report\IncomingStatementReport.cshtml" />
-    <Content Include="Views\Report\RoomDebtInfos.cshtml" />
-    <Content Include="Views\Report\PowerDebtInfos.cshtml" />
-    <Content Include="Views\Report\ReportDebt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
