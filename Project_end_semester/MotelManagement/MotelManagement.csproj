@@ -243,7 +243,6 @@
     <Compile Include="Models\ElectricityAndWaterInfo.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Parameter.cs" />
-    <Compile Include="Utility\DebugLog.cs" />
     <Compile Include="Utility\IdGenerator.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="DAL\ApplicationDbContext.cs" />

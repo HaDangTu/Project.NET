@@ -19,6 +19,7 @@ namespace MotelManagement.Controllers
             _dbContext = new ApplicationDbContext();
         }
 
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> Index()
         {
             IEnumerable<Room> rooms = await _dbContext.Rooms.Include(r => r.Guests).ToListAsync();
@@ -41,6 +42,7 @@ namespace MotelManagement.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public ActionResult Search(string content)
         {
             IEnumerable<Room> rooms = _dbContext.Rooms.Include(r => r.RoomType)

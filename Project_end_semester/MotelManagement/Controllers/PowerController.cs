@@ -24,7 +24,7 @@ namespace MotelManagement.Controllers
         /* GET: Power/Update
          * 
          */
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Update()
         {
             /* Sử dụng viewmodel/model tại đây đều được
@@ -53,7 +53,7 @@ namespace MotelManagement.Controllers
          *  ViewModel/Model sẽ lưu những thông tin mà người dùng đã nhập trên form của page.
          */
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [ValidateAntiForgeryToken]
         public ActionResult Update(PowerInfoViewModel viewModel)
         {

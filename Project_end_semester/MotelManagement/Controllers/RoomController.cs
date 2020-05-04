@@ -27,6 +27,7 @@ namespace MotelManagement.Controllers
             return View(viewModel);
         }
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public ActionResult Index(string searchString)
         {
             if (!String.IsNullOrEmpty(searchString)) // kiểm tra chuỗi tìm kiếm có rỗng/null hay không
@@ -44,7 +45,7 @@ namespace MotelManagement.Controllers
         //    IEnumerable<Room> test = _dbContext.Rooms.Include(r => r.RoomType);
         //    return View(test);
         //}
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Create()
         {
             var viewModel = new RoomInfoViewModel
@@ -54,7 +55,7 @@ namespace MotelManagement.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Create(RoomInfoViewModel ViewModel)
         {
             if (!ModelState.IsValid)
@@ -81,7 +82,7 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(String id = "")
         {
             Room room = _dbContext.Rooms.Where(r => r.ID == id).Include(r => r.RoomType).SingleOrDefault();
@@ -95,7 +96,7 @@ namespace MotelManagement.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(RoomInfoViewModel ViewModel)
         {
             var room = _dbContext.Rooms.Single(r => r.ID == ViewModel.RoomID);
@@ -104,20 +105,20 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Details(String id = "")
         {
             IEnumerable<Room> viewModel = _dbContext.Rooms.Include(r => r.RoomType).Where(r => r.ID == id);
             return View(viewModel.FirstOrDefault());
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(String id = "")
         {
             IEnumerable<Room> viewModel = _dbContext.Rooms.Include(r => r.RoomType).Where(r => r.ID == id);
             return View(viewModel.FirstOrDefault());
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(Room Room)
         {
             var room = _dbContext.Rooms.FirstOrDefault(r => r.ID == Room.ID);
@@ -125,7 +126,7 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult RoomDetail(string id)
         {
             IEnumerable<Room> rooms = _dbContext.Rooms.Include(r => r.RoomType)

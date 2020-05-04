@@ -26,6 +26,7 @@ namespace MotelManagement.Controllers
             return View(viewModel);
         }
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public ActionResult Index(string searchString)
         {
             if (!String.IsNullOrEmpty(searchString)) // kiểm tra chuỗi tìm kiếm có rỗng/null hay không
@@ -47,7 +48,7 @@ namespace MotelManagement.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Create(GuestInfoViewModel ViewModel)
         {
             if (!ModelState.IsValid)
@@ -81,7 +82,7 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(String id = "")
         {
             Guest guest = _dbContext.Guests.Where(r => r.ID == id).Include(r => r.Gender).Include(r => r.Room).SingleOrDefault();
@@ -101,7 +102,7 @@ namespace MotelManagement.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(GuestInfoViewModel ViewModel)
         {
             var guest = _dbContext.Guests.Single(r => r.ID == ViewModel.GuestID);
@@ -115,20 +116,20 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Details(String id = "")
         {
             IEnumerable<Guest> viewModel = _dbContext.Guests.Include(r => r.Gender).Include(r => r.Room).Where(r => r.ID == id);
             return View(viewModel.FirstOrDefault());
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(String id = "")
         {
             IEnumerable<Guest> viewModel = _dbContext.Guests.Include(r => r.Gender).Include(r => r.Room).Where(r => r.ID == id);
             return View(viewModel.FirstOrDefault());
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(Guest Guest)
         {
             var guest = _dbContext.Guests.FirstOrDefault(r => r.ID == Guest.ID);

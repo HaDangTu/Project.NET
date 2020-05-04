@@ -17,13 +17,14 @@ namespace MotelManagement.Controllers
             _dbContext = new ApplicationDbContext();
         }
         // GET: RoomType
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Index()
         {
             var RoomType = _dbContext.RoomTypes;
             return View(RoomType);
         }
         [HttpPost]
+        [Authorize(Roles = "Owner")]
         public ActionResult Index(string searchString)
         {
             if (!String.IsNullOrEmpty(searchString)) // kiểm tra chuỗi tìm kiếm có rỗng/null hay không
@@ -40,7 +41,7 @@ namespace MotelManagement.Controllers
             return View();
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Create(RoomType RoomTypeModel)
         {
             string nextInfosId = string.Empty;
@@ -61,14 +62,14 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(String id = "")
         {
             var RoomType = _dbContext.RoomTypes.Where(r => r.ID == id);
             return View(RoomType.FirstOrDefault());
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Edit(RoomType RoomTypeModel)
         {
             var room_type = _dbContext.RoomTypes.Single(r => r.ID == RoomTypeModel.ID);
@@ -78,20 +79,20 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Details(String id = "")
         {
             var RoomType = _dbContext.RoomTypes.Where(r => r.ID == id);
             return View(RoomType.FirstOrDefault());
         }
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(String id = "")
         {
             var RoomType = _dbContext.RoomTypes.Where(r => r.ID == id);
             return View(RoomType.FirstOrDefault());
         }
         [HttpPost]
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         public ActionResult Delete(RoomType RoomTypeModel)
         {
             var RoomType = _dbContext.RoomTypes.FirstOrDefault(r => r.ID == RoomTypeModel.ID);

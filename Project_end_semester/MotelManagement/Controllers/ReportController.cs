@@ -24,7 +24,8 @@ namespace MotelManagement.Controllers
         {
             _dbContext = new ApplicationDbContext();
         }
-        [AllowAnonymous]
+
+        [Authorize(Roles = "Owner")]
         public ActionResult IncomingStatementReport(string FromDate, string ToDate)
         {
             if (FromDate != null & ToDate != null)
@@ -49,6 +50,7 @@ namespace MotelManagement.Controllers
             return summary;
         }
 
+        [Authorize(Roles = "Guest")]
         public ActionResult RoomDebtInfos(string id)
         {
             string Room_ID = id;
@@ -63,6 +65,7 @@ namespace MotelManagement.Controllers
             return model.Name;
         }
 
+        [Authorize(Roles = "Guest")]
         public ActionResult PowerDebtInfos(string id)
         {
             string Room_ID = id;
@@ -108,6 +111,7 @@ namespace MotelManagement.Controllers
             }
         }
 
+        [Authorize(Roles = "Owner")]
         public ActionResult ReportDebt()
         {
             var powermodel = (from r in _dbContext.Rooms
