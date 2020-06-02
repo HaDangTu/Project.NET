@@ -116,7 +116,7 @@ namespace MotelManagement.Controllers
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner, Guest")]
         public ActionResult Details(String id = "")
         {
             IEnumerable<Guest> viewModel = _dbContext.Guests.Include(r => r.Gender).Include(r => r.Room).Where(r => r.ID == id);

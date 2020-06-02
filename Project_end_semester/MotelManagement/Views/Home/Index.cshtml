@@ -101,9 +101,11 @@ else if (User.IsInRole("Guest"))
                 <td>@item.Gender.Name</td>
                 <td>@item.Occupation</td>
                 <td>
-                    @Html.ActionLink("Detail", "Detail", "Guest", new { id = item.ID }, null)
+                    @Html.ActionLink("Details", "Details", "Guest", new { id = item.ID }, null)
                 </td>
             </tr>
+
+            i = i + 1;
         }
     </table>
 }

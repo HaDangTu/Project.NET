@@ -75,7 +75,16 @@
         </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (User.IsInRole("Owner"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to list", "Index")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Back to list", "Index", "Home", new { }, null)
+    </p>
+}
