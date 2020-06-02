@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Web.Mvc;
 using MotelManagement.DAL;
 using MotelManagement.Models;
+using MotelManagement.ViewModels;
 
 namespace MotelManagement.Controllers
 {
@@ -19,13 +20,28 @@ namespace MotelManagement.Controllers
             _dbContext = new ApplicationDbContext();
         }
 
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner, Guest")]
         public async Task<ActionResult> Index()
         {
-            IEnumerable<Room> rooms = await _dbContext.Rooms.Include(r => r.Guests).ToListAsync();
-            
-            return View(rooms);
+            HomeViewModel viewModel = new HomeViewModel();
+            if (User.IsInRole("Owner"))
+            {
+                IEnumerable<Room> rooms = await _dbContext.Rooms.Include(r => r.Guests).ToListAsync();
+                viewModel.Rooms = rooms;
+
+            }
+            else
+            {
+                string username = User.Identity.Name;
+                ApplicationUser user = _dbContext.Users.Where(u => u.UserName == username).Single();
+
+                Room room = _dbContext.Rooms.Where(r => r.UserID == user.Id).Include(r => r.Guests).Single();
+                viewModel.Room = room;
+            }
+
+            return View(viewModel);
         }
+
 
         public ActionResult About()
         {

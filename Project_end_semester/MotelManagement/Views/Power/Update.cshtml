@@ -33,7 +33,8 @@ else if (TempData["Fail"] != null)
             </tr>
             @foreach (var room in Model.Rooms)
             {
-                var info = room.Infos.Where(i => i.Date.Month == (DateTime.Now.Month - 1)).SingleOrDefault();
+                var month = room.Infos.Max(i => i.Date.Month);
+                var info = room.Infos.Where(i => i.Date.Month == month).SingleOrDefault();
 
                 <tr>
                     <td hidden="hidden">@room.ID</td>
@@ -59,7 +60,7 @@ else if (TempData["Fail"] != null)
                 </strong> <strong id="date-text"></strong>
             </div>
             @Html.EditorFor(model => model.Date,
-                   new { htmlAttributes = new { @id = "date", @class = "form-control", @type = "date", @hidden="hidden" } })
+                   new { htmlAttributes = new { @id = "date", @class = "form-control", @type = "date", @hidden = "hidden"} })
 
             <div class="form-row mt-2">
                 @Html.LabelFor(model => model.ElectricIndicator, htmlAttributes: new { @class = "control-label col-3 mt-1" })
@@ -99,6 +100,7 @@ else if (TempData["Fail"] != null)
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/util")
     <script>
         function onItemClick(event) {
             var table = document.getElementById("table");
@@ -111,8 +113,9 @@ else if (TempData["Fail"] != null)
                 var date = new Date(table.rows[rowIndex].cells[2].innerText);
                 date.setMonth(date.getMonth() + 1);
 
-                document.getElementById("date").value = date.toLocaleDateString();
-                document.getElementById("date-text").innerText = date.toLocaleDateString();
+
+                document.getElementById("date").value = convertDateString(DAY_PATTERN2, date);
+                document.getElementById("date-text").innerText = convertDateString(DAY_PATTERN1, date);
             }
         }
 

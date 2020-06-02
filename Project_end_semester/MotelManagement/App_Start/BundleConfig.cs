@@ -27,6 +27,10 @@ namespace MotelManagement
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/bootstrap.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/util").Include(
+                "~/Scripts/util/datetime.js",
+                "~/Scripts/util/handle_active_link.js"));
         }
     }
 }

@@ -14,8 +14,10 @@
         int guestInRoom = room.Guests.Count(g => g.StateID == "S01");
         int maxGuest = room.RoomType.NumberOfGuest;
 
-        var oldPower = room.Infos.Where(i => i.Date.Month == DateTime.Now.Month - 1).SingleOrDefault();
-        var newPower = room.Infos.Where(i => i.Date.Month == DateTime.Now.Month).SingleOrDefault();
+        var month = room.Infos.Max(i => i.Date.Month);
+
+        var oldPower = room.Infos.Where(i => i.Date.Month == month - 1).SingleOrDefault();
+        var newPower = room.Infos.Where(i => i.Date.Month == month).SingleOrDefault();
 
         ApplicationDbContext db_Context = new ApplicationDbContext();
         int electricPrice = int.Parse(db_Context.Parameters

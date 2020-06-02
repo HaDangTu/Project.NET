@@ -27,18 +27,20 @@ namespace MotelManagement.Controllers
         [Authorize(Roles = "Owner")]
         public ActionResult Update()
         {
+            var month = _dbContext.Infos.Max(i => i.Date.Month);
             /* Sử dụng viewmodel/model tại đây đều được
              * nếu model thông thường không đáp ứng được dữ liệu để show trên view thì sử dụng view model
              * vd trên form thêm một học sinh cần phải có dữ liệu để fill vào combox lớp đê người dùng chọn lớp cho học sinh
              * thì ta tạo StudentViewModel có thuộc tính List<Course> Courses để có thể fill data vào combobox
-             */ 
+             */
+
             PowerInfoViewModel viewModel = new PowerInfoViewModel()
             {
                 /* Sử dụng LINQ đê lọc ra những phòng chưa đc cập nhật chỉ số điện, nước
                  */
                 Rooms = _dbContext.Rooms.Include(i => i.Infos)
                 .Where(r => r.Guests.Count(g => g.StateID == "S01") > 0 &&
-                    r.Infos.Count(i => i.Date.Month == (DateTime.Now.Month)) < 1) 
+                    r.Infos.Count(i => i.Date.Month == (month + 1)) < 1) 
             };
 
             /*
@@ -66,12 +68,13 @@ namespace MotelManagement.Controllers
             if (lastInfos == null) nextInfosId = "IEW200001";
             else nextInfosId = IdGenerator.generateNextID("IEW", lastInfos.ID, true);
 
+            var month = _dbContext.Infos.Max(i => i.Date.Month);
             //Kiểm tra các trường trên form đã valid hay không
             if (!ModelState.IsValid)
             {
                 viewModel.Rooms = _dbContext.Rooms.Include(i => i.Infos)
                 .Where(r => r.Guests.Count(g => g.StateID == "S01") > 0 &&
-                    r.Infos.Count(i => i.Date.Month == (DateTime.Now.Month)) < 1);
+                    r.Infos.Count(i => i.Date.Month == (month + 1)) < 1);
 
                 return View("Update", viewModel);
             }

@@ -23,6 +23,7 @@ namespace MotelManagement.Controllers
             _dbContext = new ApplicationDbContext();
         }
 
+        [Authorize(Roles = "Owner")]
         public ActionResult Index()
         {
             IEnumerable<Room> rooms = _dbContext.Rooms.Include(r => r.RoomType)
@@ -133,14 +134,14 @@ namespace MotelManagement.Controllers
             }
 
             var room = _dbContext.Rooms.Where(r => r.ID == id).SingleOrDefault();
-
+            var month = _dbContext.Infos.Max(i => i.Date.Month);
             //lấy hóa đơn điện nước mới nhất của phòng
             var lastInvoice = room.Invoices.Where(i => i.Content.Contains("điện")).LastOrDefault();
 
             //lấy thông tin chỉ số điện nước (cũ, mới)
-            var oldPowerInfo = room.Infos.Where(i => i.Date.Month == DateTime.Now.Month - 1)
+            var oldPowerInfo = room.Infos.Where(i => i.Date.Month == month - 1)
                 .SingleOrDefault();
-            var newPowerInfo = room.Infos.Where(i => i.Date.Month == DateTime.Now.Month)
+            var newPowerInfo = room.Infos.Where(i => i.Date.Month == month)
                 .SingleOrDefault();
 
             long sumElectricUsage = newPowerInfo.ElectricIndicator - oldPowerInfo.ElectricIndicator;

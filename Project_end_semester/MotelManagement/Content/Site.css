@@ -26,3 +26,27 @@ textarea {
 .card-pointer {
     cursor: pointer;
 }
+
+.admin-container {
+    width: 250px;
+    display: flex;
+    padding: 10px;
+}
+
+.avatar {
+    flex: 2;
+    align-self: center;
+}
+
+.user-info {
+    flex: 8;
+}
+
+.user-info h6, .user-info p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.user-info h6:hover, .user-info p:hover {
+    cursor: default;
+}

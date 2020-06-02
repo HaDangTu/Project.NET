@@ -8,26 +8,70 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-md fixed-top bg-primary navbar-dark">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                @Html.ActionLink("ABC EMotel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    @*<nav class="navbar navbar-expand-md fixed-top bg-primary navbar-dark">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    @Html.ActionLink("ABC EMotel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav font-weight-bold">
+                        <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                        @if (HttpContext.Current.User.IsInRole("Owner"))
+                        {
+                            <li class="nav-item">@Html.ActionLink("Khách trọ", "Index", "Guest", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                            <li class="nav-item">@Html.ActionLink("Phòng", "Index", "Room", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                            <li class="nav-item">@Html.ActionLink("Loại phòng", "Index", "RoomType", new { area = "" }, new { @class = "nav-link text-white " })</li>
+                            <li class="nav-item">@Html.ActionLink("Điện nước", "Update", "Power", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                            <li class="nav-item">@Html.ActionLink("Hóa đơn", "Index", "Invoice", new { area = "" }, new { @class = "nav-link text-white" })</li>
+                            <li class="nav-item dropdown">
+                                <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Báo cáo</a>
+                                <div class="dropdown-menu">
+                                    @Html.ActionLink("Báo cáo doanh số", "IncomingStatementReport", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Thống kê nợ", "ReportDebt", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                                </div>
+                            </li>
+                        }
+                        else if (HttpContext.Current.User.IsInRole("Guest"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Hóa đơn</a>
+                                <div class="dropdown-menu">
+                                    @Html.ActionLink("Phòng", "RoomDebtInfos", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Điện nước", "PowerDebtInfos", "Report", new { area = "" }, new { @class = "dropdown-item" })
+                                </div>
+                            </li>
+                        }
+                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link text-white text-white" })</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-white text-white" })</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-            <div class="navbar-collapse collapse ">
-                <ul class="nav navbar-nav font-weight-bold">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-white " })</li>
+        </nav>*@
+    <nav class="navbar navbar-expand-sm fixed-top bg-primary navbar-dark">
+        <div class="container">
+            <a href="Home" class="navbar-brand">Mario EMotel</a>
+
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#collapseNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="collapseNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link font-weight-bold active " })</li>
                     @if (HttpContext.Current.User.IsInRole("Owner"))
                     {
-                        <li class="nav-item">@Html.ActionLink("Khách trọ", "Index", "Guest", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                        <li class="nav-item">@Html.ActionLink("Phòng", "Index", "Room", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                        <li class="nav-item">@Html.ActionLink("Loại phòng", "Index", "RoomType", new { area = "" }, new { @class = "nav-link text-white " })</li>
-                        <li class="nav-item">@Html.ActionLink("Điện nước", "Update", "Power", new { area = "" }, new { @class = "nav-link text-white" })</li>
-                        <li class="nav-item">@Html.ActionLink("Hóa đơn", "Index", "Invoice", new { area = "" }, new { @class = "nav-link text-white" })</li>
+
+                        <li class="nav-item">@Html.ActionLink("Khách trọ", "Index", "Guest", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
+                        <li class="nav-item">@Html.ActionLink("Phòng", "Index", "Room", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
+                        <li class="nav-item">@Html.ActionLink("Loại phòng", "Index", "RoomType", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
+                        <li class="nav-item">@Html.ActionLink("Điện nước", "Update", "Power", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
+                        <li class="nav-item">@Html.ActionLink("Hóa đơn", "Index", "Invoice", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
                         <li class="nav-item dropdown">
-                            <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Báo cáo</a>
+                            <a class="nav-link dropdown-toggle font-weight-bold" data-toggle="dropdown" href="#">Báo cáo</a>
                             <div class="dropdown-menu">
                                 @Html.ActionLink("Báo cáo doanh số", "IncomingStatementReport", "Report", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Thống kê nợ", "ReportDebt", "Report", new { area = "" }, new { @class = "dropdown-item" })
@@ -36,31 +80,39 @@
                     }
                     else if (HttpContext.Current.User.IsInRole("Guest"))
                     {
+                        
                         <li class="nav-item dropdown">
-                            <a href="" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">Hóa đơn</a>
+                            <a class="nav-link dropdown-toggle font-weight-bold" data-toggle="dropdown" href="#">Hóa đơn</a>
                             <div class="dropdown-menu">
                                 @Html.ActionLink("Phòng", "RoomDebtInfos", "Report", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Điện nước", "PowerDebtInfos", "Report", new { area = "" }, new { @class = "dropdown-item" })
                             </div>
                         </li>
+                        <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
+                        <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link font-weight-bold" })</li>
                     }
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link text-white text-white" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-white text-white" })</li>
+
                 </ul>
-                @Html.Partial("_LoginPartial")
+
+                <ul class="navbar-nav ml-auto">
+                    @Html.Partial("_LoginPartial")
+                </ul>
             </div>
         </div>
     </nav>
+
+
     <div class="container pt-5">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - ABC EMotel</p>
+            <p>&copy; @DateTime.Now.Year - Mario EMotel</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/util")
     @RenderSection("scripts", required: false)
 </body>
 </html>

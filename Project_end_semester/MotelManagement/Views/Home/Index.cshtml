@@ -1,78 +1,113 @@
-﻿@model IEnumerable<MotelManagement.Models.Room>
+﻿@model MotelManagement.ViewModels.HomeViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="mt-2">
-    @using (Html.BeginForm("Search", "Home", FormMethod.Post))
-    {
-        <div class="input-group mb-3">
-            <input id="search-bar" name="content" type="text" placeholder="Thông tin phòng cần tìm"
-                   class="form-control col" />
-            <div class="input-group-append">
-                <input id="btn-search" type="submit" value="Search" class="btn btn-primary" />
+@if (HttpContext.Current.User.IsInRole("Owner"))
+{
+    <div class="mt-2">
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+        {
+            <div class="input-group mb-3">
+                <input id="search-bar" name="content" type="text" placeholder="Thông tin phòng cần tìm"
+                       class="form-control col" />
+                <div class="input-group-append">
+                    <input id="btn-search" type="submit" value="Search" class="btn btn-primary" />
+                </div>
             </div>
+        }
+
+    </div>
+
+    if (Model.Rooms.Count() > 0)
+    {
+        <div class="card-columns">
+
+            @foreach (var item in Model.Rooms)
+            {
+
+                int guestInRoom = item.Guests.Count();
+                int maxGuest = item.RoomType.NumberOfGuest;
+
+                if (guestInRoom == 0)
+                {
+                    <div class="card shadow-sm border-success card-pointer">
+
+                        <div class="card-body">
+                            <h4 class="card-title text-success text-center">@item.Name</h4>
+                            <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
+                            @Html.ActionLink("Thêm người", "Create", "Guest", new { }, new { @class = "card-link" })
+                            @Html.ActionLink("Detail", "RoomDetail", "Room", new { id = item.ID }, new { @class = "card-link" })
+                        </div>
+                    </div>
+                }
+                else if (guestInRoom > 0 && guestInRoom < maxGuest)
+                {
+                    <div class="card shadow-sm border-warning card-pointer">
+
+                        <div class="card-body">
+                            <h4 class="card-title text-warning text-center">@item.Name</h4>
+                            <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
+                            @Html.ActionLink("Thêm người", "Create", "Guest", new { }, new { @class = "card-link" })
+                            @Html.ActionLink("Detail", "RoomDetail", "Room", new { id = item.ID }, new { @class = "card-link" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card shadow-sm border-danger card-pointer">
+
+                        <div class="card-body">
+                            <h4 class="card-title text-danger text-center">@item.Name</h4>
+                            <p class="card-text ">Số lượng người: @guestInRoom/@maxGuest</p>
+                            @Html.ActionLink("Thêm người", "Create", "Guest", new { }, new { @class = "card-link disabled-link" })
+                            @Html.ActionLink("Detail", "RoomDetail", "Room", new { id = item.ID }, new { @class = "card-link" })
+                        </div>
+                    </div>
+                }
+            }
         </div>
     }
-
-</div>
-
-@if (Model.Count() > 0)
+    else
+    {
+        <h5>No item match you search!Try Again or return @Html.ActionLink("Home", "Index", "Home")</h5>
+    }
+}
+else if (User.IsInRole("Guest"))
 {
-    <div class="card-columns">
+    <h3 class="text-center">@Model.Room.Name</h3>
 
-        @foreach (var item in Model)
+    <p>Số lượng thành viên: @Model.Room.Guests.Count(g => g.StateID == "S01")</p>
+
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>STT</th>
+                <th>Họ tên</th>
+                <th>Giới tính</th>
+                <th>Nghề nghiệp</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.Room.Guests)
         {
-
-            int guestInRoom = item.Guests.Count();
-            int maxGuest = item.RoomType.NumberOfGuest;
-
-            if (guestInRoom == 0)
-            {
-                <div class="card shadow-sm border-success card-pointer">
-
-                    <div class="card-body">
-                        <h4 class="card-title text-success text-center">@item.Name</h4>
-                        <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
-                        @Html.ActionLink("Thêm người", "Create", "Guest", new { }, new { @class = "card-link" })
-                        @Html.ActionLink("Detail", "RoomDetail", "Room", new { id = item.ID }, new { @class = "card-link" })
-                    </div>
-                </div>
-            }
-            else if (guestInRoom > 0 && guestInRoom < maxGuest)
-            {
-                <div class="card shadow-sm border-warning card-pointer">
-
-                    <div class="card-body">
-                        <h4 class="card-title text-warning text-center">@item.Name</h4>
-                        <p class="card-text">Số lượng người: @guestInRoom/@maxGuest</p>
-                        @Html.ActionLink("Thêm người", "Create", "Guest", new { }, new { @class = "card-link" })
-                        @Html.ActionLink("Detail", "RoomDetail", "Room", new { id = item.ID }, new { @class = "card-link" })
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="card shadow-sm border-danger card-pointer">
-
-                    <div class="card-body">
-                        <h4 class="card-title text-danger text-center">@item.Name</h4>
-                        <p class="card-text ">Số lượng người: @guestInRoom/@maxGuest</p>
-                        @Html.ActionLink("Thêm người", "Create", "Guest", new { }, new { @class = "card-link disabled-link" })
-                        @Html.ActionLink("Detail", "RoomDetail", "Room", new { id = item.ID }, new { @class = "card-link" })
-                    </div>
-                </div>
-            }
+            int i = 1;
+            <tr>
+                <td>@i</td>
+                <td>@item.Name</td>
+                <td>@item.Gender.Name</td>
+                <td>@item.Occupation</td>
+                <td>
+                    @Html.ActionLink("Detail", "Detail", "Guest", new { id = item.ID }, null)
+                </td>
+            </tr>
         }
-    </div>
+    </table>
 }
-else
-{
-    <h5>No item match you search!Try Again or return @Html.ActionLink("Home", "Index", "Home")</h5>
-}
+
 
 @section Scripts {
     <script>
