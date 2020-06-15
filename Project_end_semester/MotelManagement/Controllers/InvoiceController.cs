@@ -99,6 +99,9 @@ namespace MotelManagement.Controllers
             string invoiceId = "I2000000001";
             if (lastInvoice != null) invoiceId = IdGenerator.generateNextID("I", lastInvoice.ID, true);
 
+            var room = _dbContext.Rooms.Where(r => r.ID == viewModel.RoomID).Single();
+            double price = room.RoomType.Price;
+
             //Mapping data
             Invoice invoice = new Invoice()
             {
@@ -117,7 +120,7 @@ namespace MotelManagement.Controllers
             _dbContext.Invoices.Add(invoice);
             if (_dbContext.SaveChanges() > 0)
                 PrintRoomInvoice(viewModel.RoomName, invoice.FromDate, invoice.ToDate,
-                    invoice.Content, (invoice.Proceeds - invoice.ExcessCash), invoice.Proceeds, invoice.ExcessCash);
+                    invoice.Content, price, invoice.Debt, invoice.Proceeds, invoice.ExcessCash);
 
 
             return RedirectToAction("Index");
@@ -220,6 +223,7 @@ namespace MotelManagement.Controllers
             if (lastInvoice == null) nextId = "I2000000001";
             else nextId = IdGenerator.generateNextID("I", lastInvoice.ID, true);
 
+
             Invoice invoice = new Invoice()
             {
                 ID = nextId,
@@ -245,7 +249,7 @@ namespace MotelManagement.Controllers
         }
 
         private void PrintRoomInvoice(string roomName, DateTime fromDate, DateTime toDate, 
-            string content, double debt, double proceeds, double excessCash)
+            string content, double price, double debt, double proceeds, double excessCash)
         {
             string fileName = roomName + "_invoice_" + DateTime.Now.Millisecond.ToString() + ".txt";
             string path = HttpRuntime.AppDomainAppPath + "\\" + fileName;
@@ -259,11 +263,13 @@ namespace MotelManagement.Controllers
             writer.WriteLine("");
             writer.WriteLine("                  Nội dung:        {0}                      ", content);
             writer.WriteLine("                  Tiền thuê phòng: {0, 15} VND                         ", 
-                debt.ToString("N0"));
+                price.ToString("N0"));
             writer.WriteLine("                  Tiền khách đưa:  {0, 15} VND                         ", 
                 proceeds.ToString("N0"));
             writer.WriteLine("                  Tiền thừa:       {0, 15} VND                         ", 
                 excessCash.ToString("N0"));
+            writer.WriteLine("                  Còn nợ:          {0, 15} VND                         ",
+                debt.ToString("N0"));
             writer.WriteLine("--------------------------------------------------------------------------------");
             writer.WriteLine("");
             writer.WriteLine("        Người thuê                                     Chủ nhà trọ              ");
