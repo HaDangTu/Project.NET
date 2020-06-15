@@ -480,3 +480,7 @@ C:\Users\vu\Desktop\Project.NET\Project_end_semester\MotelManagement\obj\Debug\M
 C:\Users\vu\Desktop\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.csproj.CopyComplete
 C:\Users\vu\Desktop\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.dll
 C:\Users\vu\Desktop\Project.NET\Project_end_semester\MotelManagement\obj\Debug\MotelManagement.pdb
+C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.dll
+C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.Mvc.dll
+C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.xml
+C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.Mvc.xml

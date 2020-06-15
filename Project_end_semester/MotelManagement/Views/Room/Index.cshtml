@@ -1,27 +1,31 @@
-﻿@model IEnumerable<MotelManagement.Models.Room>
-
+﻿@model PagedList.IPagedList<MotelManagement.Models.Room>
+@using PagedList.Mvc;
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Index";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <p>
     @Html.ActionLink("Thêm Phòng", "Create")
 </p>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Room", FormMethod.Get))
 {
 <p>
-    Tìm Kiếm: @Html.TextBox("SearchString") <input type="submit" value="Tìm kiếm" />
-    @Html.ActionLink("Tìm Kiếm Năng Cao", "AdvancedSearch") 
+    Tìm Kiếm: @Html.TextBox("SearchString", (string)ViewBag.searchValue) <input type="submit" value="Tìm kiếm" />
+    @Html.Hidden("page", (object)ViewBag.page)
+    @Html.Hidden("size", (object)ViewBag.pageSize)
 </p>
 }
 <table class="table">
     <tr>
-        <th class="thead-light">Tên Phòng</th>
-        <th class="thead-light">Tên Loại Phòng</th>
-        <th></th>
+        <th>
+            @Html.DisplayName("Tên Phòng")
+        </th>
+        <th>
+            @Html.DisplayName("Tên Loại Phòng")
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -40,5 +44,23 @@
             </td>
         </tr>
     }
-
 </table>
+<br />
+<div class="row">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+        @using (Html.BeginForm("Index", "Room", FormMethod.Get))
+        {
+            <p>
+                Kích thước trang: @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();" })
+            </p>
+
+            @Html.Hidden("page", (object)ViewBag.page)
+            @Html.Hidden("searchString", (object)ViewBag.searchValue)
+        }
+    </div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
+        Trang: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </div>
+</div>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, size = ViewBag.currentSize, searchString = ViewBag.searchValue }))
