@@ -32,7 +32,7 @@ namespace MotelManagement.Controllers
                 return request[methodInfo.Name] != null;
             }
         }
-        [Authorize(Roles = "Owner")]
+        //[Authorize(Roles = "Owner")]
         public ActionResult Index(int? size, int? page, string searchString)
         {
             // Tạo biến ViewBag gồm  searchValue và page

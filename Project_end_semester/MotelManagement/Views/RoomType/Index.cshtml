@@ -1,6 +1,6 @@
 ﻿@model PagedList.IPagedList<MotelManagement.Models.RoomType>
 @using PagedList.Mvc;
-
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,11 +11,11 @@
 </p>
 @using (Html.BeginForm("Index", "RoomType", FormMethod.Get))
 {
-<p>
-    Tìm Kiếm: @Html.TextBox("SearchString", (string)ViewBag.searchValue) <input type="submit" value="Tìm kiếm" />
-    @Html.Hidden("page", (object)ViewBag.page)
-    @Html.Hidden("size", (object)ViewBag.pageSize)
-</p>
+    <p>
+        Tìm Kiếm: @Html.TextBox("SearchString", (string)ViewBag.searchValue) <input type="submit" value="Tìm kiếm" />
+        @Html.Hidden("page", (object)ViewBag.page)
+        @Html.Hidden("size", (object)ViewBag.pageSize)
+    </p>
 }
 <table class="table">
     <tr>
