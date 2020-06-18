@@ -48,16 +48,26 @@ namespace MotelManagement.Controllers
             var room = _dbContext.Rooms.Where(r => r.ID == id).SingleOrDefault();
 
             //Lấy hóa đơn mới nhất của phòng
-            var lastInvoice = room.Invoices.Where(i => i.Content.Contains("phòng")).LastOrDefault();
+            var lastInvoice = room.Invoices.Where(i => i.Content.Contains("phòng") && i.RoomID == id).LastOrDefault();
 
             //Tính date time
             DateTime fromDate = new DateTime();
             DateTime toDate = new DateTime();
+            double previousDebt = 0;
 
             if (lastInvoice != null)
             {
                 fromDate = lastInvoice.ToDate;
                 toDate = lastInvoice.ToDate.AddMonths(1);
+
+                //Lấy tiền nợ hóa đơn lần trước
+                var debt = _dbContext.Invoices.Where(i => i.Debt > 0 && i.RoomID == id && i.Content.Contains("phòng"))
+                    .Select(i => i.Debt);
+                
+                foreach (double item in debt)
+                {
+                    previousDebt += item;
+                }
             }
             else //phòng mới được thuê lần đầu
             {
@@ -65,6 +75,7 @@ namespace MotelManagement.Controllers
                 toDate = fromDate.AddMonths(1);
             }
 
+            
             InvoiceViewModel viewModel = new InvoiceViewModel()
             {
                 RoomID = id,
@@ -72,9 +83,11 @@ namespace MotelManagement.Controllers
                 FromDate = fromDate,
                 ToDate = toDate,
                 CollectionDate = DateTime.Now,
-                Debt = room.RoomType.Price.ToString("N0"),
+                PreviousDebt = previousDebt.ToString("N0"),
+                SumMoney = room.RoomType.Price.ToString("N0"),
                 Proceeds = "0",
-                ExcessCash = "0"
+                ExcessCash = "0",
+                Debt = "0"
             };
             
             return View(viewModel);
@@ -89,6 +102,20 @@ namespace MotelManagement.Controllers
             //Check infomation is valid
             if (!ModelState.IsValid)
             {
+                var priceOfRoom = _dbContext.Rooms.Where(r => r.ID == id).Select(r => r.RoomType.Price).Single();
+
+                var debt = _dbContext.Invoices.Where(i => i.Debt > 0 && i.RoomID == id && i.Content.Contains("phòng"))
+                    .Select(i => i.Debt);
+
+                double previousDebt = 0;
+                foreach (double item in debt)
+                {
+                    previousDebt += item;
+                }
+
+                viewModel.SumMoney = priceOfRoom.ToString("N0");
+                viewModel.PreviousDebt = previousDebt.ToString("N0");
+
                 return View("CollectRoomInvoice", viewModel);
             }
 
@@ -116,11 +143,20 @@ namespace MotelManagement.Controllers
                 ExcessCash = double.Parse(viewModel.ExcessCash)
             };
 
+            //Cập nhật tiền nợ hóa đơn nếu có
+            var debtInvoice = _dbContext.Invoices.Where(i => i.Debt > 0 && i.RoomID == id && i.Content.Contains("phòng"));
+            foreach (var item in debtInvoice)
+            {
+                item.Debt = 0;
+            }
+            _dbContext.SaveChanges();
+
             //Save invoice
             _dbContext.Invoices.Add(invoice);
             if (_dbContext.SaveChanges() > 0)
                 PrintRoomInvoice(viewModel.RoomName, invoice.FromDate, invoice.ToDate,
-                    invoice.Content, price, invoice.Debt, invoice.Proceeds, invoice.ExcessCash);
+                    invoice.Content, price, invoice.Debt, invoice.Proceeds, invoice.ExcessCash, viewModel.PreviousDebt);
+
 
 
             return RedirectToAction("Index");
@@ -161,10 +197,20 @@ namespace MotelManagement.Controllers
             //tính thời gian (từ ngày, đến ngày)
             DateTime fromDate = new DateTime();
             DateTime toDate = new DateTime();
+            double previousDebt = 0;
 
             if (lastInvoice != null)
             {
                 fromDate = lastInvoice.ToDate;
+
+                //lấy tiền nợ hóa đơn điện trước
+                var previousDebtInvoices = _dbContext.Invoices.Where(i => i.Debt > 0 && i.RoomID == id && i.Content.Contains("điện"))
+                    .Select(i => i.Debt);
+
+                foreach (var item in previousDebtInvoices)
+                {
+                    previousDebt += item;
+                }
             }
             else
             {
@@ -194,9 +240,11 @@ namespace MotelManagement.Controllers
                 WaterNewIndicator = newPowerInfo.WaterIndicator.ToString("N0"),
                 SumWaterUsage = sumWaterUsage.ToString("N0"),
                 WaterMoney = waterMoney.ToString("N0"),
-                Debt = sumMoney.ToString("N0"),
+                SumMoney = sumMoney.ToString("N0"),
+                Debt = "0",
                 Proceeds = "0",
-                ExcessCash = "0"
+                ExcessCash = "0",
+                PreviousDebt = previousDebt.ToString("N0")
             };
             
             return View(viewModel);
@@ -207,7 +255,7 @@ namespace MotelManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Owner")]
-        public ActionResult CollectPowerInvoice(InvoiceViewModel viewModel)
+        public ActionResult CollectPowerInvoice(string id, InvoiceViewModel viewModel)
         {
             //Check infomation is valid
             if (!ModelState.IsValid)
@@ -237,19 +285,25 @@ namespace MotelManagement.Controllers
                 ExcessCash = double.Parse(viewModel.ExcessCash)
             };
 
-            
+            var debtInvoice = _dbContext.Invoices.Where(i => i.Debt > 0 && i.RoomID == id && i.Content.Contains("điện"));
+            foreach (var item in debtInvoice)
+            {
+                item.Debt = 0;
+            }
+            _dbContext.SaveChanges();
+
             _dbContext.Invoices.Add(invoice);
             if (_dbContext.SaveChanges() > 0)
                 PrintPowerInvoice(viewModel.RoomName, invoice.FromDate, invoice.ToDate, invoice.Content,
                     viewModel.ElectricOldIndicator, viewModel.ElectricNewIndicator, viewModel.SumElectricUsage, viewModel.ElectricMoney,
                     viewModel.WaterOldIndicator, viewModel.WaterNewIndicator, viewModel.SumWaterUsage, viewModel.WaterMoney,
-                    (invoice.Proceeds - invoice.ExcessCash), invoice.Proceeds, invoice.ExcessCash);
+                    invoice.Debt, invoice.Proceeds, invoice.ExcessCash, viewModel.SumMoney, viewModel.PreviousDebt);
 
             return RedirectToAction("Index");
         }
 
         private void PrintRoomInvoice(string roomName, DateTime fromDate, DateTime toDate, 
-            string content, double price, double debt, double proceeds, double excessCash)
+            string content, double price, double debt, double proceeds, double excessCash, string previousDebt)
         {
             string fileName = roomName + "_invoice_" + DateTime.Now.Millisecond.ToString() + ".txt";
             string path = HttpRuntime.AppDomainAppPath + "\\" + fileName;
@@ -264,6 +318,8 @@ namespace MotelManagement.Controllers
             writer.WriteLine("                  Nội dung:        {0}                      ", content);
             writer.WriteLine("                  Tiền thuê phòng: {0, 15} VND                         ", 
                 price.ToString("N0"));
+            writer.WriteLine("                  Nợ trước:        {0, 15} VND                         ",
+                previousDebt);
             writer.WriteLine("                  Tiền khách đưa:  {0, 15} VND                         ", 
                 proceeds.ToString("N0"));
             writer.WriteLine("                  Tiền thừa:       {0, 15} VND                         ", 
@@ -281,7 +337,7 @@ namespace MotelManagement.Controllers
         private void PrintPowerInvoice(string roomName, DateTime fromDate, DateTime toDate, 
             string content, string oldEleIndi, string newEleIndi, string sumEle, string elePrice, 
             string oldWaterIndi, string newWaterIndi, string sumWater, string waterPrice, 
-            double debt, double proceeds, double excessCash)
+            double debt, double proceeds, double excessCash, string price, string previousDebt)
         {
             string fileName = roomName + "_power_invoice" + DateTime.Now.Millisecond.ToString() + ".txt";
             string path = HttpRuntime.AppDomainAppPath + "\\" + fileName;
@@ -313,11 +369,15 @@ namespace MotelManagement.Controllers
             writer.WriteLine("--------------------------------------------------------------------------------");
             writer.WriteLine("                  Nội dung:        {0}                      ", content);
             writer.WriteLine("                  Tổng số tiền:    {0, 15} VND                         ",
-                debt.ToString("N0"));
+                price);
+            writer.WriteLine("                  Nợ trước:        {0, 15} VND                         ",
+                previousDebt);
             writer.WriteLine("                  Tiền khách đưa:  {0, 15} VND                         ",
                 proceeds.ToString("N0"));
             writer.WriteLine("                  Tiền thừa:       {0, 15} VND                         ",
                 excessCash.ToString("N0"));
+            writer.WriteLine("                  Còn nợ:          {0, 15} VND                         ",
+                debt.ToString("N0"));
             writer.WriteLine("--------------------------------------------------------------------------------");
             writer.WriteLine("");
             writer.WriteLine("        Người thuê                                     Chủ nhà trọ              ");

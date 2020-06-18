@@ -63,8 +63,16 @@ namespace MotelManagement.ViewModels
         [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
         public string WaterMoney { get; set; }
 
-        [Required]
         [Display(Name = "Tổng số tiền")]
+        public string SumMoney { get; set; }
+
+        
+        [Display(Name = "Nợ trước")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public string PreviousDebt { get; set; }
+
+        [Required]
+        [Display(Name = "Còn nợ")]
         [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
         public string Debt { get; set; }
 

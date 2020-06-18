@@ -24,10 +24,9 @@
             </div>
 
             <div>
-                @Html.EditorFor(model => model.RoomID,
-                new { htmlAttributes = new { @hidden="hidden" } } )
-                @Html.EditorFor(model => model.RoomName,
-                     new { htmlAttributes = new { @hidden="hidden" } } )
+                @Html.EditorFor(model => model.RoomID, new { htmlAttributes = new { @hidden="hidden" } } )
+                @Html.EditorFor(model => model.RoomName, new { htmlAttributes = new { @hidden="hidden" } } )
+                @Html.EditorFor(model => model.PreviousDebt, new { htmlAttributes = new { @hidden = "hidden"}})
             </div>
 
 
@@ -62,17 +61,22 @@
             </div>
 
             <div class="form-row mt-2">
-                @Html.LabelFor(model => model.Debt,
+                @Html.LabelFor(model => model.SumMoney,
                htmlAttributes: new { @class = "font-weight-bold col-3" })
                 <div class="col">
-                    <p class="text-danger">
-                        <span id="debt-text">
-                            @Model.Debt
-                        </span> VND
+                    <p class="font-weight-bold">
+                        @Model.SumMoney VND
                     </p>
-                    @Html.EditorFor(model => model.Debt,
-                   new { htmlAttributes = new { @class = "form-control",
-                       @id = "debt", @hidden="hidden" } })
+                </div>
+            </div>
+
+            <div class="form-row mt-2">
+                @Html.LabelFor(model => model.PreviousDebt,
+               htmlAttributes: new { @class = "font-weight-bold col-3" })
+                <div class="col">
+                    <p class="font-weight-bold">
+                        @Model.PreviousDebt VND
+                    </p>
                 </div>
             </div>
 
@@ -87,7 +91,7 @@
                 @Html.LabelFor(model => model.ExcessCash,
                htmlAttributes: new { @class = "font-weight-bold col-3" })
                 <div class="col">
-                    <p class="text-success">
+                    <p class="text-success font-weight-bold">
                         <span id="excess-cash-text">
                             @Model.ExcessCash
                         </span> VND
@@ -98,6 +102,20 @@
                 </div>
             </div>
 
+            <div class="form-row mt-2">
+                @Html.LabelFor(model => model.Debt,
+               htmlAttributes: new { @class = "font-weight-bold col-3" })
+                <div class="col">
+                    <p class="text-danger font-weight-bold">
+                        <span id="debt-text">
+                            @Model.Debt
+                        </span> VND
+                    </p>
+                    @Html.EditorFor(model => model.Debt,
+                   new { htmlAttributes = new { @class = "form-control",
+                       @id = "debt", @hidden="hidden" } })
+                </div>
+            </div>
 
             <div class="form-row mt-4 justify-content-center">
                 <input type="submit" value="Xuất hóa đơn" class="btn btn-primary" />
@@ -126,9 +144,11 @@
                 if (value == "") value = "0";
 
                 var money = parseInt(value);
-                var debt = parseInt(@Model.Debt.Replace(",", ""));
+                var debt = parseInt(@Model.SumMoney.Replace(",", ""));
+                var beforeDebt = parseFloat(@Model.PreviousDebt.Replace(",", ""));
 
-                debt = debt - money;
+                
+                debt = (debt + beforeDebt) - money;
 
                 $("#proceeds").val(money.toLocaleString("en-US"));
                 $("#debt-text").text(debt < 0 ? "0" : debt.toLocaleString("en-US"));

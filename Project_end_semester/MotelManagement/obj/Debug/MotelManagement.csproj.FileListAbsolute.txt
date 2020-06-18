@@ -484,3 +484,7 @@ C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\Paged
 C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.Mvc.dll
 C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.xml
 C:\Users\vu\Documents\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.Mvc.xml
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.dll
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.Mvc.dll
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.xml
+E:\GitHub\Project.NET\Project_end_semester\MotelManagement\bin\PagedList.Mvc.xml
