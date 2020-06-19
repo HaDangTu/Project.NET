@@ -91,7 +91,8 @@ namespace MotelManagement.Controllers
             var viewModel = new GuestInfoViewModel
             {
                 Genders = _dbContext.Genders.ToList(),
-                Rooms = _dbContext.Rooms.ToList()
+                //Lấy danh sách những phòng chưa full người
+                Rooms = _dbContext.Rooms.Where(r => r.Guests.Count() < r.RoomType.NumberOfGuest).ToList() 
             };
             return View(viewModel);
         }
