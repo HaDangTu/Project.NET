@@ -87,8 +87,12 @@ namespace MotelManagement.Controllers
                        Contains(content, r.RoomType.Price.ToString()));
             }
 
+            HomeViewModel viewModel = new HomeViewModel()
+            {
+                Rooms = result
+            };
 
-            return View("Index", result);
+            return View("Index", viewModel);
         }
 
         private bool Contains(string value1, string value2)
