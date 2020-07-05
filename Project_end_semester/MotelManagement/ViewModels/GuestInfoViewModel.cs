@@ -37,6 +37,10 @@ namespace MotelManagement.ViewModels
         [Required(ErrorMessage = "Vui lòng nhập {0}")]
         public string RoomID { get; set; }
 
+        [Display(Name = "Ngày bắt đầu ở")]
+        [Required(ErrorMessage = "Vui lòng nhập {0}")]
+        public DateTime StartDate { get; set; }
+
         [Required]
         [Display(Name = "Giới tính")]
         public string GenderID { get; set; }

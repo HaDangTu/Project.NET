@@ -92,6 +92,7 @@ namespace MotelManagement.Controllers
             {
                 Genders = _dbContext.Genders.ToList(),
                 //Lấy danh sách những phòng chưa full người
+                StartDate = DateTime.Now,
                 Rooms = _dbContext.Rooms.Where(r => r.Guests.Count() < r.RoomType.NumberOfGuest).ToList() 
             };
             return View(viewModel);
@@ -125,6 +126,7 @@ namespace MotelManagement.Controllers
                 HomeTown = ViewModel.HomeTown,
                 Occupation = ViewModel.Occupation,
                 RoomID = ViewModel.RoomID,
+                StartDate = ViewModel.StartDate,
                 StateID = "S01"
             };
             _dbContext.Guests.Add(guest);
@@ -146,6 +148,7 @@ namespace MotelManagement.Controllers
                 GenderID = guest.GenderId,
                 RoomID = guest.RoomID,
                 Genders = _dbContext.Genders.ToList(),
+                StartDate = guest.StartDate,
                 Rooms = _dbContext.Rooms.ToList()
             };
             return View(viewModel);
@@ -162,6 +165,7 @@ namespace MotelManagement.Controllers
             guest.IDentityCardNumber = ViewModel.IDentityCardNumber;
             guest.GenderId = ViewModel.GenderID;
             guest.RoomID = ViewModel.RoomID;
+            guest.StartDate = ViewModel.StartDate;
             _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
